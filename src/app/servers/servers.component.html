@@ -1,5 +1,17 @@
-<h3>servers works!</h3>
+<div class="container">
+    <div class="column">
+        <h3>servers works!</h3>
 
-<app-server></app-server>
-<app-server></app-server>
-<app-server></app-server>
+        <button class="btn btn-primary"
+        [disabled]="!allowNewServer"
+        (click)="onCreateServer()">Add Server</button>
+        <p>{{ serverCreationStatus }}</p>
+        <!-- <p>{{ allowNewServer ? 'go': 'wait 2s' }}</p> -->
+        <!-- <p [innerText]="allowNewServer"></p> -->
+
+        <app-server></app-server>
+        <app-server></app-server>
+        <app-server></app-server>
+    </div>
+</div>
+
