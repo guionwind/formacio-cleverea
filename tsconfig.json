@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "sourceMap": true,
+    "strict": false,  // must be false for the course
     "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "node",
