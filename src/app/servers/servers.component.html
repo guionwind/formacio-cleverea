@@ -1,7 +1,17 @@
 <div class="container">
     <div class="column">
-        <h3>servers works!</h3>
 
+        <label> Server name </label>
+        <!-- <input
+            type="text"
+            class="form-control"
+            (input)="onUpdateServerName($event)">
+        <p> {{serverName}}</p> -->
+        <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="serverName">
+        <!-- <p> {{serverName}}</p> -->
         <button class="btn btn-primary"
         [disabled]="!allowNewServer"
         (click)="onCreateServer()">Add Server</button>
