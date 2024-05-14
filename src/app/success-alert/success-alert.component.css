@@ -1,3 +1,13 @@
-.p {
-    color: rgb(87, 175, 46)
+
+h3 {
+    color: rgb(87, 175, 46);
+    text-align-last: center;
+    margin: 20px;
+}
+
+.box {
+    border: 4px solid grey;
+    padding: 4px;
+    width: fit-content;
+    border-radius: 10px;
 }
