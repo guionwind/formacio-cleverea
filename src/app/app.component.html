@@ -35,11 +35,12 @@
     <p *ngIf="displayDetails">Contrasenya de simplelocalize: 123123</p>
   </div>
   <h3>Log of button presses:</h3>
-  <p *ngFor="let item of buttonLog">
+  <p
+    *ngFor="let item of buttonLog; index as i"
+    [ngStyle]="{ color: i >= 5 ? 'white' : 'black' }"
+    [ngClass]="{ 'bg-blue': i >= 5 }"
+  >
+    <!-- [ngClass]="i >= 5 ? 'bg-blue' : ''" -->
     {{ item }}
   </p>
 </div>
-
-<ng-template #coloredItem [ngStyle]="{ backgroundColor: getColor() }">
-  {{ item }}
-</ng-template>

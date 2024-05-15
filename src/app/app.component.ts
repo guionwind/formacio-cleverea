@@ -16,11 +16,8 @@ export class AppComponent {
     else {
       this.displayDetails = true;
     }
-    this.buttonLog.push("item number " + (this.buttonLog.length + 1))
-  }
-
-  getColor() {
-    return 'blue'
+    //this.buttonLog.push("item number " + (this.buttonLog.length + 1))
+    this.buttonLog.push(new Date())
   }
 
 }
