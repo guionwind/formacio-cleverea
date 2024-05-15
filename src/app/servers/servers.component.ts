@@ -12,6 +12,7 @@ export class ServersComponent {
   serverName = '';
 
   constructor() {
+    //setTimeout rep una funcio a executar i el delay corresponent
     setTimeout(() => this.allowNewServer = true, 2000);
   }
 

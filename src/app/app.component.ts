@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  username: string = ""
 
+  onSubmitUsername() {
+    this.username = ""
+  }
 }
