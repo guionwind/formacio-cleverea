@@ -6,5 +6,21 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  displayDetails: boolean = false;
+  buttonLog = []
+
+  toggleDisplayDetails() {
+    if (this.displayDetails === true) {
+      this.displayDetails = false;
+    }
+    else {
+      this.displayDetails = true;
+    }
+    this.buttonLog.push("item number " + (this.buttonLog.length + 1))
+  }
+
+  getColor() {
+    return 'blue'
+  }
 
 }
