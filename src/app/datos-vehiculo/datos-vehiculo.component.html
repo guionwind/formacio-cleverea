@@ -1,1 +1,111 @@
-<p>datos-vehiculo works!</p>
+<div class="container">
+  <div class="column" style="margin: 20px">
+    <div class="fillbox">
+      <p>Datos del vehículo</p>
+      <hr style="border-color: mediumspringgreen" />
+
+      <div>
+        <table style="margin-bottom: 10px">
+          <tr>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tipo de vehículo"
+                [(ngModel)]="tipoVehiculo"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Número de bastidor (opcional)"
+                [(ngModel)]="numeroBastidor"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Marca"
+                [(ngModel)]="marca"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Modelo"
+                [(ngModel)]="modelo"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Precio de compra"
+                [(ngModel)]="precioCompra"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="¿Cuándo lo compraste?"
+                [(ngModel)]="fechaCompra"
+              />
+            </th>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <div style="display: inline-flex">
+          <p>Asistencia en carretera</p>
+          <div style="margin-right: 10px"></div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="asistenciaCarretera" />
+            <div class="slider"></div>
+          </label>
+        </div>
+        <div></div>
+        <div style="display: inline-flex">
+          <p>Responsabilidad civil</p>
+          <div style="margin-right: 10px"></div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="responsabilidadCivil" />
+            <div class="slider"></div>
+          </label>
+        </div>
+        <div></div>
+        <div style="display: inline-flex">
+          <p>Vehículo de sustitución</p>
+          <div style="margin-right: 10px"></div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="vehiculoSustitucion" />
+            <div class="slider"></div>
+          </label>
+        </div>
+        <div></div>
+        <div style="display: inline-flex">
+          <p>Colisión con animales</p>
+          <div style="margin-right: 10px"></div>
+          <label class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="colisionAnimales" />
+            <div class="slider"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 10px"></div>
+    <div class="fillbox">
+      <button class="btn btn-primary" type="submit" (click)="onClick($event)">
+        Pedir seguro
+      </button>
+      <p *ngIf="submitted">Seguro pedido</p>
+    </div>
+  </div>
+</div>
