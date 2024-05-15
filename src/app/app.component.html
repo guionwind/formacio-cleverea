@@ -9,16 +9,6 @@
 
 <div class = "container">
     <div class = "column">
-        <p> </p>
-        <input
-            type = "text"
-            class = "form-control"
-            placeholder = "Enter username here"
-            [(ngModel)] = "username">
-        <p>Your username will be {{username}}</p>
-        <button
-            class = "btn btn-primary"
-            [disabled] = "!username"
-            (click)="onSubmitUsername()"> Submit username</button>
+        <app-submit-username></app-submit-username>
     </div>
 </div>

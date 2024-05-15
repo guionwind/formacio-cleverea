@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ServerComponent } from './server/server.component';
 import { ServersComponent } from './servers/servers.component';
+import { SubmitUsernameComponent } from './submit-username/submit-username.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ServerComponent,
-    ServersComponent
+    ServersComponent,
+    SubmitUsernameComponent
   ],
   imports: [
     BrowserModule,
