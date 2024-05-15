@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "formacio-cleverea": {
+    "business-case": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/formacio-cleverea",
+            "outputPath": "dist/business-case",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "formacio-cleverea:build:production"
+              "buildTarget": "business-case:build:production"
             },
             "development": {
-              "buildTarget": "formacio-cleverea:build:development"
+              "buildTarget": "business-case:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "formacio-cleverea:build"
+            "buildTarget": "business-case:build"
           }
         },
         "test": {

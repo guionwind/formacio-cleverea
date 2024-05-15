@@ -10,5 +10,5 @@ import { DatosVehiculoComponent } from './datos-vehiculo/datos-vehiculo.componen
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'formacio-cleverea';
+  title = 'business-case';
 }
