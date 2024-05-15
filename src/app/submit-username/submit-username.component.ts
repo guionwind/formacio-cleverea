@@ -6,9 +6,11 @@ import { Component } from '@angular/core';
   styleUrl: './submit-username.component.css'
 })
 export class SubmitUsernameComponent {
+  submittedUsernames = []
   username: string = ""
 
   onSubmitUsername() {
+    this.submittedUsernames.push(this.username)
     this.username = ""
   }
 }
