@@ -63,41 +63,7 @@
         </table>
       </div>
       <div>
-        <div style="display: inline-flex">
-          <p>Asistencia en carretera</p>
-          <div style="margin-right: 10px"></div>
-          <label class="toggle-switch">
-            <input type="checkbox" [(ngModel)]="asistenciaCarretera" />
-            <div class="slider"></div>
-          </label>
-        </div>
-        <div></div>
-        <div style="display: inline-flex">
-          <p>Responsabilidad civil</p>
-          <div style="margin-right: 10px"></div>
-          <label class="toggle-switch">
-            <input type="checkbox" [(ngModel)]="responsabilidadCivil" />
-            <div class="slider"></div>
-          </label>
-        </div>
-        <div></div>
-        <div style="display: inline-flex">
-          <p>Vehículo de sustitución</p>
-          <div style="margin-right: 10px"></div>
-          <label class="toggle-switch">
-            <input type="checkbox" [(ngModel)]="vehiculoSustitucion" />
-            <div class="slider"></div>
-          </label>
-        </div>
-        <div></div>
-        <div style="display: inline-flex">
-          <p>Colisión con animales</p>
-          <div style="margin-right: 10px"></div>
-          <label class="toggle-switch">
-            <input type="checkbox" [(ngModel)]="colisionAnimales" />
-            <div class="slider"></div>
-          </label>
-        </div>
+        <app-configuracion-poliza></app-configuracion-poliza>
       </div>
     </div>
     <div style="margin-top: 10px"></div>

@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
 
 @Component({
   selector: 'app-datos-vehiculo',
   standalone: true,
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    ConfiguracionPolizaComponent,
   ],
   templateUrl: './datos-vehiculo.component.html',
   styleUrl: './datos-vehiculo.component.css'
