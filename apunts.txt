@@ -1,0 +1,220 @@
+** Contents of the onboarding section (wip) **
+
+/node_modules and package-log.json can be rebuilt using
+    npm i
+therefore these files should be added to .gitignore
+
+If there are any dependency changes, reinstall.
+Use npm ci to clean install.
+
+Cleverea's front-end is based on a microfrontends architecture, which allowed for independent parts of the frontend to be loaded separately and saved development time. It also allows for different libraries/frameworks to be used for each microfrontend.
+(Using this architecture is no longer necessary to reap similar benefits and therefore the company looks to move away from this architecture towards a single-page web application.)
+Every microfrontend is inside an nx monorepo for better reusability and faster CI
+
+
+Client-side rendering (CSR) vs. Server-side rendering (SSR)
+    - Impact on SEO
+    - Performance
+    - Security concerns
+
+Documentation: notion.js; somewhat incomplete but mostly reliable
+
+
+------
+Dia 1
+
+** udemy Angular course **
+
+Creating and using a new component
+    ng g c [name] (g == generate, c == component) 
+    - Naming convention: [name].component.[extension]
+    - Create new folder within the /src/app folder to store the new files
+    - Every component has at least a .ts script and a .http file. Optionally:
+        - .css for component specific styles
+        - .spec.ts for testing
+    - Within the TypeScript file:
+        @Component({
+            selector: name of the "tag" used when building up html files, must be unique (e.g. app-server)
+            templateUrl: path to the .html file || template: inline .html 
+            styleUrl: path to the .css file
+        })
+        export class NameComponent {}
+        - Note: selectors can be used inside other components within the same module
+        - Of these, templateUrl / template are the only mandatory fields
+        - Template can be multi-line if using backticks ` `
+    - Import and declare the new component in the corresponding module.ts file
+
+Importing modules
+    - Modify the "imports" property in /app/app.module.ts 
+
+Importing a style sheet
+    - Modify the "styles" property in /angular.json
+
+Standalone components (overview)
+    - On creating a component, set standalone:true inside the @Component decorator
+    - Also set imports: [ComponentsToImport]
+    - This component can be used without being added to any module
+
+Angular directives:
+    - [(ngModel)]
+    - @Component defines a new component in the TypeScript file
+    - @NgModule defines a module. See app.module.ts
+        - Generally not worth defining another one
+    
+
+Ctrl+Shift+T para abrir la ultima pestaña cerrada
+
+------
+Dia 2
+
+Assignment 1 completado!
+
+Repo basic-project subido a GitHub
+
+Bootstrap tiene una libreria de iconos muy completa. Ver aqui: https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
+
+Types of selectors:
+    - 
+
+Databinding and event binding
+    - String interpolation: {{ data }} -> works if the result resolves to a string. Can be a ternary (x ? y : z) or a method.
+    - Property binding: [property] = "data" -> binds the value of a property to a given value/variable
+    - Event binding: (event)="expression" -> runs code when the event happens. for instance, (click) for a button that was clicked
+
+    - Two way binding: [(ngModel)] = "data" -> will also react to changes to data from elsewhere
+        - Requires FormsModule
+        - See the input boxes in servers.component.html
+         
+
+Events:
+    - $event passed as an argument to a function sends the event data (for instance, inputted text)
+
+    - input: on each keystroke in a field
+    - click: on click
+
+Explicit type casting using <desiredType>(targetVariable)
+
+
+Ctrl+Shift+A para comentar un trozo de codigo
+
+---------
+Dia 3
+
+Utilitzar les devtools del navegador de Chrome per debugar: Breakpoints i watchers
+    - Ctrl+P para abrir un archivo
+
+Directives are instructions in the DOM. with/without a template
+
+    Structural directives (add/remove elements):
+    - ngIf -> <p *ngIf="serverCreated; else noServer"> Server was created, server name is {{ serverName }}</p>
+        - template: <ng-template #name> content </ng-template> is a snippet that can be jumped to by its tag
+        - New syntax in Angular 17: @if (condition) {<p>Visible text if true</p>}
+    - ngFor -> 
+
+    Attribute directives (modify elements):
+    - ngStyle -> <p [ngStyle]="{ camelCaseProperty: 'value' }"> || <p [ngStyle]="{ 'propertyname' : 'value' }">
+        - allows us to dynamically update styles
+    - ngClass
+        - assigns CSS class dynamically
+
+
+Angular snippets in VSCode
+
+Prettier extension reformats code automatically on save (toggle option in VSCode with Ctrl+,)
+
+
+
+A Cleverea fan servir Material > Bootstrap com a llibreria de components
+
+-------
+Dia 4
+
+Comunicacio entre components
+    - Hi ha moltes maneres
+    - De pare a fill i viceversa, amb missatges entre ells.
+    - Entre components, amb un servei intermediari que recopili les dades d'un component i que les envii a l'altre, i viceversa en tornar enrere
+
+Standalone components vs. modules
+    - Els moduls son utils si s'han de repetir els mateixos imports en un conjunt de components
+    - Els standalone declaren individualment les seves dependencies i per tant en exportar-se no inclouen imports innecessaris
+
+Missatges
+    - Similar a databinding, on el valor d'una propietat d'un component ve donada per un altre component
+
+Com a bona pràctica, tot element que s'hagi de crear varis cops es pot transformar en un component "plantilla" amb els valors corresponents.
+    - Per exemple, un toggle pot rebre una string per mostrar en pantalla quina variable representa, i retornar el seu estat (on/off) al pare.
+
+Configuracio del mac, es tot un mon. Fer una copia de seguretat en Time Machine perque sera mes facil fer el canvi de portatil.
+
+-------
+Dia 5
+
+href vs routerLink com a anchor tags:
+    - href es la versio html, routerLink es la implementacio d'Angular
+    - routerLink permet navegar entre les rutes d'una pàgina; href permet qualsevol link
+    - href mata l'estat en redirigir, routerLink no. En una SPA, fer servir routerLink.
+
+Nombres de algunos componentes de UI (poner los iconitos usando un span)
+    - Hamburger menu = Tipico boton de 3 barras horizontales que despliega un menu
+    - Caret = flechita del dropdown menu
+
+Models are just a TypeScript class
+
+To define the type of an array, use "type[]" (e.g. names: string[] = [])
+
+Reminder: use the browser devtools to debug error messages and use breakpoints. If bundled, check main.bundle.js file
+
+
+/** Section 5: Components & Databinding deep dive **/
+
+It is good to split the app into smaller components for reusability and maintainability
+Property & Event binding can be used on HTML elements, Directives and Components.
+We can databind custom properties inside components when using them.
+For instance: <app-comp [property]="test" (somethingHappens)="onHappening($event)"></app-comp>
+
+(The following keywords need to be imported before using!)
+
+Data sharing: setting the value of a child's property.
+The decorator @Input() exposes a property of a component, so that the parent can bind to it by name and successfully pass a property
+    - Alias: Suppose @Input('newName') property. The parent will use [newName]=value, instead of [property]=value
+
+Event binding: listen to a given event from a child component, and execute some code when it triggers. For instance, if our function expects to receive data, we need to define the type in the function declaration.
+    - To declare an event in the child: @Output() eventName = new EventEmitter<type>; the type can be a json.
+    - eventName can be aliased the same way as when using the @Input() decorator
+    - To emit an event in the child: this.eventName.emit(data)
+
+Local references: can be placed on any HTML element. They look like this: <input #exampleLocalReferenceName>
+They allow us to access an HTML element and use the data in the TypeScript code.
+    - If used to read a form input: the argument of the function is of type HTMLInputElement 
+    
+View encapsulation: Styles only apply to the component they belong to. Parents cannot set the style of the child.
+    - Not a default behaviour: Angular sets this by changing the CSS selector and HTML tags and making them unique within each component.
+    - To override: Inside the @Component decorator, set the following property
+        encapsulation:  ViewEncapsulation.Emulated (default)
+                        ViewEncapsulation.None (remove)
+                        ViewEncapsulation.ShadowDom (use browser ShadowDom implementation; might be deprecated)
+
+Usage of @ViewChild and @ContentChild
+    - In Angular 8+: if we want to use the selected element in ngOnInit, add {static: true} as an argument
+    - @ViewChild('localReferenceName', {static: true}) name : ElementRef allows us to access a chunk of the DOM (the referenced tag)
+        - For example, read the data within this.name.nativeElement.value to get an input.
+
+Content projection: Directive <ng-content> allows us to hook a piece of HTML into our components. For complex-ish pieces of HTML to be reused, it gives us a better option than just using property binding.
+    - If several hooks are needed, <ng-content select="[example]"></ng-content> selects only the elements that match the "example" CSS selector.
+
+Angular component lifecycle hooks, in order
+    - ngOnChanges           -> called after input property changes
+    - ngOnInit              -> when the component is initialized
+    - ngDoCheck             -> change detection for re-rendering
+    - ngAfterContentInit    -> after the ng-content has been projected into view
+    - ngAfterContentChecked -> same as DoCheck for ng-content
+    - ngAfterViewInit       -> after the view (and child views) have been initilized
+    - ngAfterViewChecked    -> same as DoCheck for the view
+    - ngOnDestroy           -> called right before the component will be destroyed
+
+It is good practice to declare the hooks to be used as interfaces:
+export class ExampleComponent implements OnInit, OnChanges {}
+
+
+
+
