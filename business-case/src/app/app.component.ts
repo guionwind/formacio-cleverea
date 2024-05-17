@@ -5,7 +5,9 @@ import { DatosVehiculoComponent } from './datos-vehiculo/datos-vehiculo.componen
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, DatosVehiculoComponent],
+  imports: [
+    RouterOutlet,
+    DatosVehiculoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
