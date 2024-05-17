@@ -2,7 +2,7 @@
   <p>Asistencia en carretera</p>
   <div style="margin-right: 10px"></div>
   <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="asistenciaCarretera" />
+    <input type="checkbox" [(ngModel)]="asistencia" (change)="onSwitch()" />
     <div class="slider"></div>
   </label>
 </div>
@@ -11,7 +11,11 @@
   <p>Responsabilidad civil</p>
   <div style="margin-right: 10px"></div>
   <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="responsabilidadCivil" />
+    <input
+      type="checkbox"
+      [(ngModel)]="responsabilidad"
+      (change)="onSwitch()"
+    />
     <div class="slider"></div>
   </label>
 </div>
@@ -20,7 +24,7 @@
   <p>Vehículo de sustitución</p>
   <div style="margin-right: 10px"></div>
   <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="vehiculoSustitucion" />
+    <input type="checkbox" [(ngModel)]="vehiculo" (change)="onSwitch()" />
     <div class="slider"></div>
   </label>
 </div>
@@ -29,7 +33,8 @@
   <p>Colisión con animales</p>
   <div style="margin-right: 10px"></div>
   <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="colisionAnimales" />
+    <input type="checkbox" [(ngModel)]="colision" (change)="onSwitch()" />
     <div class="slider"></div>
   </label>
 </div>
+<div>{{ asistencia }} {{ responsabilidad }} {{ vehiculo }} {{ colision }}</div>

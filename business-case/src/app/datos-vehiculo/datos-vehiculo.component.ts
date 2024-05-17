@@ -38,4 +38,11 @@ export class DatosVehiculoComponent {
     console.log(event)
     this.submitted = true;
   }
+  onUpdateConfig(configData: {asistencia: boolean, responsabilidad: boolean, vehiculo: boolean, colision: boolean}) {
+    this.asistenciaCarretera = configData.asistencia
+    this.responsabilidadCivil = configData.responsabilidad
+    this.vehiculoSustitucion = configData.vehiculo
+    this.colisionAnimales = configData.colision
+  } 
+
 }

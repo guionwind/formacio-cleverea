@@ -63,10 +63,12 @@
         </table>
       </div>
       <div>
-        <app-configuracion-poliza></app-configuracion-poliza>
+        <app-configuracion-poliza (sendUpdate)="onUpdateConfig($any($event))">
+        </app-configuracion-poliza>
       </div>
     </div>
     <div style="margin-top: 10px"></div>
+
     <div class="fillbox">
       <button class="btn btn-primary" type="submit" (click)="onClick($event)">
         Pedir seguro
