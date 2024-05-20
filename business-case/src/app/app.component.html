@@ -1,19 +1,24 @@
-<div class="container">
+<div>
   <h1 style="color: mediumspringgreen">Cleverea</h1>
 </div>
 
 <hr />
 
-<app-datos-vehiculo (sendData)="onReceiveData($event)"></app-datos-vehiculo>
-
-<hr />
-<app-summary
-  *ngIf="showSummary"
-  [nombreApellidos]="nombreApellidos"
-  [fechaNacimiento]="fechaNacimiento"
-  [marcaVehiculo]="marcaVehiculo"
-  [asistenciaCarretera]="asistenciaCarretera"
-  [responsabilidadCivil]="responsabilidadCivil"
-  [vehiculoSustitucion]="vehiculoSustitucion"
-  [colisionAnimales]="colisionAnimales"
-></app-summary>
+<div style="position: relative">
+  <div style="position: absolute; left: 20px">
+    <app-datos-vehiculo (sendData)="onReceiveData($event)"></app-datos-vehiculo>
+  </div>
+  <div style="position: absolute; right: 20px">
+    <app-summary
+      class="flexbox"
+      *ngIf="showSummary"
+      [nombreApellidos]="nombreApellidos"
+      [fechaNacimiento]="fechaNacimiento"
+      [marcaVehiculo]="marcaVehiculo"
+      [asistenciaCarretera]="asistenciaCarretera"
+      [responsabilidadCivil]="responsabilidadCivil"
+      [vehiculoSustitucion]="vehiculoSustitucion"
+      [colisionAnimales]="colisionAnimales"
+    ></app-summary>
+  </div>
+</div>

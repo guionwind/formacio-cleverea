@@ -52,8 +52,22 @@ export class AppComponent {
     this.vehiculoSustitucion = poliza.vehiculoSustitucion;
     this.colisionAnimales = poliza.colisionAnimales;
 
-    this.showSummary = true;
+    if (!this.emptyData()) {
+      this.showSummary = true;
+    }
+    
   }
 
+  emptyData() {
+    const filledIn = !this.emptyString(this.nombreApellidos) && !this.emptyString(this.fechaNacimiento) && !this.emptyString(this.marcaVehiculo)
+    
+    const hayCoberturas = this.asistenciaCarretera || this.responsabilidadCivil || this.vehiculoSustitucion || this.colisionAnimales
 
+    const result = filledIn && hayCoberturas
+    return !result;
+  }
+
+  emptyString(str: string) {
+    return (str.length === 0)
+  }
 }

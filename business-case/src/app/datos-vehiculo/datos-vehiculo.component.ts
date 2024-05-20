@@ -35,15 +35,13 @@ export class DatosVehiculoComponent {
   vehiculoSustitucion: boolean = false;
   colisionAnimales: boolean = false;
 
-  submitted: boolean = false;
 
   constructor() {
-    this.submitted = false;
+    
   }
 
   onClick() {
 
-    this.submitted = true;
 
     this.sendData.emit({
       nombreApellidos: this.nombreApellidos,

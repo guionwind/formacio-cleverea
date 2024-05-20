@@ -1,8 +1,22 @@
-<p>summary works!</p>
-<p>{{ nombreApellidos }}</p>
-<p>{{ fechaNacimiento }}</p>
-<p>{{ marcaVehiculo }}</p>
-<p>{{ asistenciaCarretera }}</p>
-<p>{{ responsabilidadCivil }}</p>
-<p>{{ vehiculoSustitucion }}</p>
-<p>{{ colisionAnimales }}</p>
+<div class="fillbox">
+  <div>
+    <h3>Precio final</h3>
+    <p>{{ calculatePrice() }}€ / mes</p>
+  </div>
+  <div>
+    <h3>Asegurado</h3>
+    <p>{{ nombreApellidos }}</p>
+    <p>{{ fechaNacimiento }}</p>
+  </div>
+  <div>
+    <h3>Tu vehículo</h3>
+    <p>{{ marcaVehiculo }}</p>
+  </div>
+  <div>
+    <h3>Coberturas</h3>
+    <p *ngIf="asistenciaCarretera">Asistencia en carretera - 5€/mes</p>
+    <p *ngIf="responsabilidadCivil">Responsabilidad civil - 3€/mes</p>
+    <p *ngIf="vehiculoSustitucion">Vehículo de sustitución - 3€/mes</p>
+    <p *ngIf="colisionAnimales">Colision con animales - 2€/mes</p>
+  </div>
+</div>
