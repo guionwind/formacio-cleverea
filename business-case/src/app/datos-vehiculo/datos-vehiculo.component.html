@@ -34,14 +34,19 @@
       <hr class="horizontal-line" />
       <div>
         <h2>Coberturas</h2>
-        <app-configuracion-poliza (sendUpdate)="onUpdateConfig($any($event))">
+        <app-configuracion-poliza
+          (sendAsistencia)="onAsistencia($event)"
+          (sendResponsabilidad)="onResponsabilidad($event)"
+          (sendVehiculo)="onVehiculo($event)"
+          (sendColision)="onColision($event)"
+        >
         </app-configuracion-poliza>
       </div>
     </div>
     <div style="margin-top: 10px"></div>
 
     <div class="fillbox">
-      <button type="submit" (click)="onClick()">Pedir seguro</button>
+      <button type="submit" (click)="onSend()">Pedir seguro</button>
     </div>
   </div>
 </div>

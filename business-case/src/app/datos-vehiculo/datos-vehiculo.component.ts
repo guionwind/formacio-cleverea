@@ -32,7 +32,7 @@ export class DatosVehiculoComponent {
     this.poliza = new Poliza()
   }
 
-  onClick() {
+  onSend() {
     this.poliza.tomador.nombreApellidos = this.nombre
     this.poliza.tomador.fechaNacimiento = this.fecha
     this.poliza.tomador.marcaVehiculo = this.marca
@@ -40,11 +40,20 @@ export class DatosVehiculoComponent {
     this.sendData.emit(this.poliza)
   }
 
-  onUpdateConfig(configData: {asistencia: boolean, responsabilidad: boolean, vehiculo: boolean, colision: boolean}) {
-    this.poliza.asistenciaCarretera = configData.asistencia
-    this.poliza.responsabilidadCivil = configData.responsabilidad
-    this.poliza.vehiculoSustitucion = configData.vehiculo
-    this.poliza.colisionAnimales = configData.colision
-  } 
+  onAsistencia(bool: boolean) {
+    this.poliza.asistenciaCarretera = bool
+  }
+
+  onResponsabilidad(bool: boolean) {
+    this.poliza.responsabilidadCivil = bool
+  }
+
+  onVehiculo(bool: boolean) {
+    this.poliza.vehiculoSustitucion = bool
+  }
+
+  onColision(bool: boolean) {
+    this.poliza.colisionAnimales = bool
+  }
 
 }
