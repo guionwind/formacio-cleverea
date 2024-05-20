@@ -13,9 +13,12 @@ import { SummaryComponent } from './summary/summary.component';
     RouterOutlet,
     DatosVehiculoComponent,
     CommonModule,
-    SummaryComponent],
+    SummaryComponent,],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: [
+    './app.component.css',
+    './common/styles/styles-common.css'
+  ]
 })
 export class AppComponent {
   title = 'business-case';
@@ -39,7 +42,7 @@ export class AppComponent {
     }
   }
 
-  
+
 
   emptyData() {
     const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)

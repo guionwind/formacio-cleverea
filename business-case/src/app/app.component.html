@@ -1,10 +1,10 @@
 <div>
-  <h1 style="color: mediumspringgreen">Cleverea</h1>
+  <h1 style="color: rgb(23, 182, 57); margin-left: 15px">Cleverea</h1>
 </div>
 
-<hr />
+<hr class="horizontal-line" />
 
-<div style="position: relative">
+<div style="position: relative; top: 20px">
   <div style="position: absolute; left: 20px">
     <app-datos-vehiculo (sendData)="onReceiveData($event)"></app-datos-vehiculo>
   </div>
@@ -17,8 +17,8 @@
   </div>
 </div>
 
-<ng-template #missingData
-  ><p *ngIf="dataReceived">
+<ng-template #missingData>
+  <p *ngIf="dataReceived">
     Por favor, completa los datos del vehículo y selecciona coberturas
-  </p></ng-template
->
+  </p>
+</ng-template>
