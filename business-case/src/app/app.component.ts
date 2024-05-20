@@ -1,6 +1,8 @@
+import { Poliza } from './common/models/poliza.model';
+import { DatosVehiculoComponent } from './datos-vehiculo/datos-vehiculo.component';
+
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DatosVehiculoComponent } from './datos-vehiculo/datos-vehiculo.component';
 import { CommonModule } from '@angular/common';
 import { SummaryComponent } from './summary/summary.component';
 
@@ -18,50 +20,27 @@ import { SummaryComponent } from './summary/summary.component';
 export class AppComponent {
   title = 'business-case';
 
-  showSummary: boolean = false;
-
-  nombreApellidos: string = "";
-  fechaNacimiento: string = "";
-  marcaVehiculo: string = "";
-
-  asistenciaCarretera: boolean = false;
-  responsabilidadCivil: boolean = false;
-  vehiculoSustitucion: boolean = false;
-  colisionAnimales: boolean = false;
+  showSummary: boolean = false
   
+  poliza: Poliza
 
   constructor() {
+    this.poliza = new Poliza()
   }
 
-  onReceiveData(poliza: {
-    nombreApellidos: string,
-    fechaNacimiento: string,
-    marcaVehiculo: string,
-
-    asistenciaCarretera: boolean,
-    responsabilidadCivil: boolean,
-    vehiculoSustitucion: boolean,
-    colisionAnimales: boolean,
-  }) {
-
-    this.nombreApellidos = poliza.nombreApellidos;
-    this.fechaNacimiento = poliza.fechaNacimiento;
-    this.marcaVehiculo = poliza.marcaVehiculo;
-    this.asistenciaCarretera = poliza.asistenciaCarretera;
-    this.responsabilidadCivil = poliza.responsabilidadCivil;
-    this.vehiculoSustitucion = poliza.vehiculoSustitucion;
-    this.colisionAnimales = poliza.colisionAnimales;
+  onReceiveData(poliza: Poliza) {
+    this.poliza = poliza
 
     if (!this.emptyData()) {
-      this.showSummary = true;
+      this.showSummary = true
     }
     
   }
 
   emptyData() {
-    const filledIn = !this.emptyString(this.nombreApellidos) && !this.emptyString(this.fechaNacimiento) && !this.emptyString(this.marcaVehiculo)
+    const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)
     
-    const hayCoberturas = this.asistenciaCarretera || this.responsabilidadCivil || this.vehiculoSustitucion || this.colisionAnimales
+    const hayCoberturas = this.poliza.asistenciaCarretera || this.poliza.responsabilidadCivil || this.poliza.vehiculoSustitucion || this.poliza.colisionAnimales
 
     const result = filledIn && hayCoberturas
     return !result;

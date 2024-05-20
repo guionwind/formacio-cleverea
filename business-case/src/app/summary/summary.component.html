@@ -3,20 +3,23 @@
     <h3>Precio final</h3>
     <p>{{ calculatePrice() }}€ / mes</p>
   </div>
+  <hr />
   <div>
     <h3>Asegurado</h3>
-    <p>{{ nombreApellidos }}</p>
-    <p>{{ fechaNacimiento }}</p>
+    <p>Nombre: {{ getNombreApellidos() }}</p>
+    <p>Fecha de nacimiento: {{ getFechaNacimiento() }}</p>
   </div>
+  <hr />
   <div>
     <h3>Tu vehículo</h3>
-    <p>{{ marcaVehiculo }}</p>
+    <p>Marca: {{ getMarcaVehiculo() }}</p>
   </div>
+  <hr />
   <div>
     <h3>Coberturas</h3>
-    <p *ngIf="asistenciaCarretera">Asistencia en carretera - 5€/mes</p>
-    <p *ngIf="responsabilidadCivil">Responsabilidad civil - 3€/mes</p>
-    <p *ngIf="vehiculoSustitucion">Vehículo de sustitución - 3€/mes</p>
-    <p *ngIf="colisionAnimales">Colision con animales - 2€/mes</p>
+    <p *ngIf="poliza.asistenciaCarretera">Asistencia en carretera - 5€/mes</p>
+    <p *ngIf="poliza.responsabilidadCivil">Responsabilidad civil - 3€/mes</p>
+    <p *ngIf="poliza.vehiculoSustitucion">Vehículo de sustitución - 3€/mes</p>
+    <p *ngIf="poliza.colisionAnimales">Colision con animales - 2€/mes</p>
   </div>
 </div>

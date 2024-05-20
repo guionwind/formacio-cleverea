@@ -1,5 +1,7 @@
+import { Poliza } from '../common/models/poliza.model';
+
 import { CommonModule } from '@angular/common';
-import { Component , Input} from '@angular/core';
+import { Component , DoCheck, Input} from '@angular/core';
 
 @Component({
   selector: 'app-summary',
@@ -8,19 +10,45 @@ import { Component , Input} from '@angular/core';
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.css'
 })
-export class SummaryComponent {
+export class SummaryComponent implements DoCheck {
+  @Input() poliza: Poliza;
 
-  @Input() nombreApellidos: string = "no_inicializado";
-  @Input() fechaNacimiento: string = "no_inicializado";
-  @Input() marcaVehiculo: string = "no_inicializado";
+  nombreApellidos: string;
+  fechaNacimiento: string;
+  marcaVehiculo: string;
 
-  @Input() asistenciaCarretera: boolean = false;
-  @Input() responsabilidadCivil: boolean = false;
-  @Input() vehiculoSustitucion: boolean = false;
-  @Input() colisionAnimales: boolean = false;
+  asistenciaCarretera: boolean = false;
+  responsabilidadCivil: boolean = false;
+  vehiculoSustitucion: boolean = false;
+  colisionAnimales: boolean = false;
+
+
+  constructor() {
+    this.poliza = new Poliza()
+    this.nombreApellidos = "not-init"
+    this.fechaNacimiento = "not-init"
+    this.marcaVehiculo = "not-init"
+  }
+
+  ngDoCheck() {
+    this.nombreApellidos = this.poliza.tomador.nombreApellidos
+    this.fechaNacimiento = this.poliza.tomador.fechaNacimiento
+    this.marcaVehiculo = this.poliza.tomador.marcaVehiculo
+  }
 
   calculatePrice() {
+    return Number(this.poliza.asistenciaCarretera) * 5 + Number(this.poliza.responsabilidadCivil) * 3 + Number(this.poliza.vehiculoSustitucion) * 3 + Number(this.poliza.colisionAnimales) * 2;
+  }
 
-    return Number(this.asistenciaCarretera) * 5 + Number(this.responsabilidadCivil) * 3 + Number(this.vehiculoSustitucion) * 3 + Number(this.colisionAnimales) * 2;
+  getNombreApellidos() {
+    return this.poliza.tomador.nombreApellidos
+  }
+
+  getFechaNacimiento() {
+    return this.poliza.tomador.fechaNacimiento
+  }
+  
+  getMarcaVehiculo() {
+    return this.poliza.tomador.marcaVehiculo
   }
 }

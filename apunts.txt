@@ -213,7 +213,7 @@ Angular component lifecycle hooks, in order
     - ngAfterViewChecked    -> same as DoCheck for the view
     - ngOnDestroy           -> called right before the component will be destroyed
 
-It is good practice to declare the hooks to be used as interfaces:
+Declare the hooks to be used as interfaces:
 export class ExampleComponent implements OnInit, OnChanges {}
 
 
