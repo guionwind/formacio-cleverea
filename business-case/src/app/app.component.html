@@ -10,9 +10,15 @@
   </div>
   <div style="position: absolute; right: 20px">
     <app-summary
-      *ngIf="showSummary"
+      *ngIf="showSummary; else missingData"
       [poliza]="poliza"
       class="flexbox"
     ></app-summary>
   </div>
 </div>
+
+<ng-template #missingData
+  ><p *ngIf="dataReceived">
+    Por favor, completa los datos del vehículo y selecciona coberturas
+  </p></ng-template
+>

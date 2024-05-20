@@ -21,6 +21,8 @@ export class AppComponent {
   title = 'business-case';
 
   showSummary: boolean = false
+
+  dataReceived: boolean = false
   
   poliza: Poliza
 
@@ -30,12 +32,14 @@ export class AppComponent {
 
   onReceiveData(poliza: Poliza) {
     this.poliza = poliza
+    this.dataReceived = true
 
     if (!this.emptyData()) {
       this.showSummary = true
     }
-    
   }
+
+  
 
   emptyData() {
     const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)
