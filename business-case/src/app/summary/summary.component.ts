@@ -8,7 +8,10 @@ import { Component , DoCheck, Input} from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './summary.component.html',
-  styleUrl: './summary.component.css'
+  styleUrls: [
+    './summary.component.css',
+    '../common/styles/styles-common.css'
+  ]
 })
 export class SummaryComponent implements DoCheck {
   @Input() poliza: Poliza;

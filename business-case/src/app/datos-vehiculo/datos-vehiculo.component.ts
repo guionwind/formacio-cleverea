@@ -15,7 +15,10 @@ import { FormsModule } from '@angular/forms';
     ConfiguracionPolizaComponent,
   ],
   templateUrl: './datos-vehiculo.component.html',
-  styleUrl: './datos-vehiculo.component.css'
+  styleUrls: [
+    './datos-vehiculo.component.css',
+    '../common/styles/styles-common.css'
+  ]
 })
 export class DatosVehiculoComponent {
   @Output() sendData = new EventEmitter<Poliza>();

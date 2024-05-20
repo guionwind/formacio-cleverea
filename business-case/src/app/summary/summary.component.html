@@ -3,18 +3,18 @@
     <h3>Precio final</h3>
     <p>{{ calculatePrice() }}€ / mes</p>
   </div>
-  <hr />
+  <hr class="horizontal-line" />
   <div>
     <h3>Asegurado</h3>
     <p>Nombre: {{ getNombreApellidos() }}</p>
     <p>Fecha de nacimiento: {{ getFechaNacimiento() }}</p>
   </div>
-  <hr />
+  <hr class="horizontal-line" />
   <div>
     <h3>Tu vehículo</h3>
     <p>Marca: {{ getMarcaVehiculo() }}</p>
   </div>
-  <hr />
+  <hr class="horizontal-line" />
   <div>
     <h3>Coberturas</h3>
     <p *ngIf="poliza.asistenciaCarretera">Asistencia en carretera - 5€/mes</p>
