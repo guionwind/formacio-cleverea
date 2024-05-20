@@ -4,4 +4,16 @@
 
 <hr />
 
-<app-datos-vehiculo>Cargando...</app-datos-vehiculo>
+<app-datos-vehiculo (sendData)="onReceiveData($event)"></app-datos-vehiculo>
+
+<hr />
+<app-summary
+  *ngIf="showSummary"
+  [nombreApellidos]="nombreApellidos"
+  [fechaNacimiento]="fechaNacimiento"
+  [marcaVehiculo]="marcaVehiculo"
+  [asistenciaCarretera]="asistenciaCarretera"
+  [responsabilidadCivil]="responsabilidadCivil"
+  [vehiculoSustitucion]="vehiculoSustitucion"
+  [colisionAnimales]="colisionAnimales"
+></app-summary>

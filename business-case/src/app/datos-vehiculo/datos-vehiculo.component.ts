@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
 
@@ -15,29 +15,48 @@ import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configurac
   styleUrl: './datos-vehiculo.component.css'
 })
 export class DatosVehiculoComponent {
+  @Output() sendData = new EventEmitter<{
+    nombreApellidos: string,
+    fechaNacimiento: string,
+    marcaVehiculo: string,
 
-  submitted: boolean = false;
+    asistenciaCarretera: boolean,
+    responsabilidadCivil: boolean,
+    vehiculoSustitucion: boolean,
+    colisionAnimales: boolean,
+  }>();
 
-  tipoVehiculo: string = "";
-  numeroBastidor: string = "";
-  marca: string = "";
-  modelo: string = "";
-  precioCompra: string = "";
-  fechaCompra: string = "";
+  nombreApellidos: string = "";
+  fechaNacimiento: string = "";
+  marcaVehiculo: string = "";
 
   asistenciaCarretera: boolean = false;
   responsabilidadCivil: boolean = false;
   vehiculoSustitucion: boolean = false;
   colisionAnimales: boolean = false;
 
+  submitted: boolean = false;
+
   constructor() {
     this.submitted = false;
   }
 
-  onClick(event: any) {
-    console.log(event)
+  onClick() {
+
     this.submitted = true;
+
+    this.sendData.emit({
+      nombreApellidos: this.nombreApellidos,
+      fechaNacimiento: this.fechaNacimiento,
+      marcaVehiculo: this.marcaVehiculo,
+      asistenciaCarretera: this.asistenciaCarretera,
+      responsabilidadCivil: this.responsabilidadCivil,
+      vehiculoSustitucion: this.vehiculoSustitucion,
+      colisionAnimales: this.colisionAnimales
+    })
+
   }
+
   onUpdateConfig(configData: {asistencia: boolean, responsabilidad: boolean, vehiculo: boolean, colision: boolean}) {
     this.asistenciaCarretera = configData.asistencia
     this.responsabilidadCivil = configData.responsabilidad

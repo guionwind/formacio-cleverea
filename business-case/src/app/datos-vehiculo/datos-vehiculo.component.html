@@ -1,9 +1,8 @@
 <div class="container">
   <div class="column" style="margin: 20px">
     <div class="fillbox">
-      <p>Datos del vehículo</p>
-      <hr style="border-color: mediumspringgreen" />
-
+      <h2>Datos del vehículo</h2>
+      <hr class="horizontal-line" />
       <div>
         <table style="margin-bottom: 10px">
           <tr>
@@ -11,16 +10,8 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Tipo de vehículo"
-                [(ngModel)]="tipoVehiculo"
-              />
-            </th>
-            <th>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Número de bastidor (opcional)"
-                [(ngModel)]="numeroBastidor"
+                placeholder="Nombre y apellidos"
+                [(ngModel)]="nombreApellidos"
               />
             </th>
           </tr>
@@ -29,16 +20,8 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Marca"
-                [(ngModel)]="marca"
-              />
-            </th>
-            <th>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Modelo"
-                [(ngModel)]="modelo"
+                placeholder="Fecha de nacimiento"
+                [(ngModel)]="fechaNacimiento"
               />
             </th>
           </tr>
@@ -47,22 +30,16 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Precio de compra"
-                [(ngModel)]="precioCompra"
-              />
-            </th>
-            <th>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="¿Cuándo lo compraste?"
-                [(ngModel)]="fechaCompra"
+                placeholder="Marca del vehículo"
+                [(ngModel)]="marcaVehiculo"
               />
             </th>
           </tr>
         </table>
       </div>
+      <hr class="horizontal-line" />
       <div>
+        <h2>Coberturas</h2>
         <app-configuracion-poliza (sendUpdate)="onUpdateConfig($any($event))">
         </app-configuracion-poliza>
       </div>
@@ -70,10 +47,8 @@
     <div style="margin-top: 10px"></div>
 
     <div class="fillbox">
-      <button class="btn btn-primary" type="submit" (click)="onClick($event)">
-        Pedir seguro
-      </button>
-      <p *ngIf="submitted">Seguro pedido</p>
+      <button type="submit" (click)="onClick()">Pedir seguro</button>
+      <div *ngIf="submitted">Seguro pedido</div>
     </div>
   </div>
 </div>
