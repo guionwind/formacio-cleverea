@@ -116,7 +116,7 @@ Directives are instructions in the DOM. with/without a template
     - ngStyle -> <p [ngStyle]="{ camelCaseProperty: 'value' }"> || <p [ngStyle]="{ 'propertyname' : 'value' }">
         - allows us to dynamically update styles
     - ngClass
-        - assigns CSS class dynamically
+        - assigns CSS class dynamically. For instance: [ngClass]="{green: isSelected}"
 
 
 Angular snippets in VSCode
@@ -209,12 +209,164 @@ Angular component lifecycle hooks, in order
     - ngDoCheck             -> change detection for re-rendering
     - ngAfterContentInit    -> after the ng-content has been projected into view
     - ngAfterContentChecked -> same as DoCheck for ng-content
-    - ngAfterViewInit       -> after the view (and child views) have been initilized
+    - ngAfterViewInit       -> after the view (and child views) have been initialized
     - ngAfterViewChecked    -> same as DoCheck for the view
     - ngOnDestroy           -> called right before the component will be destroyed
 
 Declare the hooks to be used as interfaces:
 export class ExampleComponent implements OnInit, OnChanges {}
+
+
+-----
+Feedback
+- Utilitzar un enum per a les coberturas
+
+-----
+Exercici:
+- Coberturas amb un enum i ngFor
+- Pintar condicionalmente coberturas seleccionadles en verd
+- Serveis:
+	- Comunicació de datos vehículos -> coberturas+summary a través d'un servei extern
+	- Calcul del preu dins del mateix servei
+- Routing:
+	- Fer-ho en dos steps diferents: 
+		- primer entrar dades, botón siguiente
+		- despres carregar sliders cobertures+summary carregant a temps real, boto pedir seguro fora
+
+----
+** Section 7: Directives Deep Dive **
+
+Attribute vs. Structural directives 
+	- Difference: Structural directives can change the structure of the DOM / View container; attribute only affect properties
+	- Structural directives are preceded by a star character '*'
+
+
+Creating an attribute directive (using the renderer; this is the recommended way):
+
+ng g d exampleName -> creates a directive.ts file; it is advisable to place directives in a different folder
+
+@Directive({
+	selector: '[examplePotato]'
+
+})
+export class ExamplePotatoDirective implements OnInit {
+		
+	constructor(private element: ElementRef, private renderer: Renderer2) {}
+
+	ngOnInit() {
+		//this.renderer.setStyle(this.element.nativeElement, 'CSS property', 'value', 'flags');  //flags are optional
+	}
+
+	//listeners for a specific event on the element that this directive is attached to
+	@HostListener('mouseenter') mouseover(eventData: Event) {
+		this.renderer.setStyle(this.element.nativeElement, 'background-color', 'blue');
+	}
+	@HostListener('mouseenter') mouseleave(eventData: Event) {
+		this.renderer.setStyle(this.element.nativeElement, 'background-color', 'transparent');
+	}
+
+
+}
+Then, use the selector inside any HTML tag:
+	<p examplePotato> This text is styled using the attribute directive </p>
+
+
+See the Angular documentation for more info on everything the renderer can do on the DOM.
+
+
+Alternatively, if you only need to modify a property of the host component:
+	@HostBinding('style.backgroundColor') example: string = 'transparent';
+
+Then, in the @HostListener you'd simply set this.backgroundColor = 'whatever-value'
+
+This would replace the renderer.
+
+
+You can also use property binding with inputs on custom directives, as with components. For instance, to decide the highlight-color.
+	- If one of the aliases is the same as the selector of the directive, then simply property binding to it will automatically also call the directive.
+
+
+
+Structural directives must be indicated with a star.
+
+Example implemented structural directive:
+
+@Directive({
+	selector: '[appUnless]'
+
+})
+export class UnlessDirective {
+	//IMPORTANT: this input has to be the same name as the selector
+	@Input() set appUnless(condition: boolean) {
+		if (!condition) {
+			this.vcRef.createEmbeddedView(this.templateRef);
+		}
+		else {
+			this.vcRef.clear();
+		}
+	}
+		
+	constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef) {
+		
+	}
+
+
+}
+
+templateRef represents the host component (a chunk of HTML to be rendered), vcRef represents the view where it will be rendered.
+
+Call it using *appUnless='exampleValue'
+
+
+New structural directive: ngSwitch
+
+<div [ngSwitch]="value">
+	<p *ngSwitchCase></p>
+	<p *ngSwitchCase></p>
+	...
+	<p *ngSwitchDefault></p>
+</div>
+
+
+
+** Section 9: Using Services & Dependency Injection **
+
+
+Services allow us to outsource code. They are particularly useful for data processing and for communication between unrelated components.
+This allows any part of our application to interact with the others, without the need of making a parent-child chain and repeating code.
+
+Create services in a common folder and follow the naming convention (example.service.ts).
+Services are just normal TypeScript classes, without any decorator.
+IMPORTANT: to use a service, do not instantiate the service manually; use a dependency injector instead. (Angular)
+
+To use a service in a component (e.g. named ExampleService):
+	- constructor (private example: ExampleService) {} 
+	- inside the @Component decorator -> providers: [ExampleService]
+	- add the import
+	- then, access the property using this.example.whateverServiceMethod(data_to_pass);
+
+Alternative way of injecting a service (more verbose):
+	private exampleService?: ExampleService;
+	constructor() { this.exampleService = inject(ExampleService) }
+
+Injector Hierarchy
+	- The injector exposes an instance of the service for the given component as well as all of its children. In fact, they share the same instance.
+	- A service can be provided to:
+		- AppModule: the same instance applies to the whole app
+		- AppComponent: available for all commponents, but not for other services
+		- Other components: available to that component and its children
+This also matters when adding the providers to each component: depends on whether you need a single or several instances across the hierarchy.
+
+Importing a service in another service is possible. You will need to attach metadata to the target class using the @Injectable() decorator.
+This allows a service to receive injections. The service you want to inject does not need @Injectable; however, it is recommendable to add it anyway.
+
+
+
+
+
+
+
+
 
 
 
