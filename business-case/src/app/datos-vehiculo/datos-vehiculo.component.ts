@@ -1,9 +1,11 @@
-import { Poliza } from '../common/models/poliza.model';
-import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
-
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { Poliza } from '../common/models/poliza.model';
+import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
+import { Tomador } from '../common/models/tomador.model';
+import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 
 
 @Component({
@@ -28,7 +30,7 @@ export class DatosVehiculoComponent {
   marca: string
   poliza: Poliza
 
-  constructor() {
+  constructor(private gestionPoliza:GestionPolizaService) {
     this.nombre = ""
     this.fecha = ""
     this.marca = ""
@@ -36,9 +38,8 @@ export class DatosVehiculoComponent {
   }
 
   onSend() {
-    this.poliza.tomador.nombreApellidos = this.nombre
-    this.poliza.tomador.fechaNacimiento = this.fecha
-    this.poliza.tomador.marcaVehiculo = this.marca
+    
+    this.gestionPoliza.updateTomador(this.nombre, this.fecha, this.marca)
 
     this.sendData.emit(this.poliza)
   }

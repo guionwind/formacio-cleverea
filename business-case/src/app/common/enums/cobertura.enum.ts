@@ -1,6 +1,6 @@
 export enum Cobertura {
-    AsistenciaCarretera,
-    ResponsabilidadCivil,
-    vehiculoSustitucion,
-    ColisionAnimales
+    AsistenciaCarretera = "AsistenciaCarretera",
+    ResponsabilidadCivil = "ResponsabilidadCivil",
+    vehiculoSustitucion = "VehiculoSustitucion",
+    ColisionAnimales = "ColisionAnimales"
 }

@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderinputComponent } from '../common/components/sliderinput/sliderinput.component';
+import { GestionPolizaService } from '../common/services/gestion-poliza.service';
+import { Cobertura } from '../common/enums/cobertura.enum';
 
 @Component({
   selector: 'app-configuracion-poliza',
@@ -15,18 +17,12 @@ import { SliderinputComponent } from '../common/components/sliderinput/sliderinp
 
 export class ConfiguracionPolizaComponent {
 
-  @Output() sendAsistencia = new EventEmitter<boolean>();
-  @Output() sendResponsabilidad = new EventEmitter<boolean>();
-  @Output() sendVehiculo = new EventEmitter<boolean>();
-  @Output() sendColision = new EventEmitter<boolean>();
-
-
   asistencia: boolean;
   responsabilidad: boolean;
   vehiculo: boolean;
   colision: boolean;
 
-  constructor() {
+  constructor(private gestionPoliza: GestionPolizaService) {
     this.asistencia = false;
     this.responsabilidad = false;
     this.vehiculo = false;
@@ -34,18 +30,18 @@ export class ConfiguracionPolizaComponent {
   }
 
   onAsistencia(bool: boolean) {
-    this.sendAsistencia.emit(bool)
+    this.gestionPoliza.updateAsistencia(bool)
   }
 
   onResponsabilidad(bool: boolean) {
-    this.sendResponsabilidad.emit(bool)
+    this.gestionPoliza.updateResponsabilidad(bool)
   }
 
   onVehiculo(bool: boolean) {
-    this.sendVehiculo.emit(bool)
+    this.gestionPoliza.updateVehiculo(bool)
   }
 
   onColision(bool: boolean) {
-    this.sendColision.emit(bool)
+    this.gestionPoliza.updateColision(bool)
   }
 }

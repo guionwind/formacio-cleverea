@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SummaryComponent } from './summary/summary.component';
+import { GestionPolizaService } from './common/services/gestion-poliza.service';
 
 @Component({
   selector: 'app-root',
@@ -26,34 +27,20 @@ export class AppComponent {
   showSummary: boolean = false
 
   dataReceived: boolean = false
-  
-  poliza: Poliza
 
-  constructor() {
-    this.poliza = new Poliza()
+  constructor(private gestionPoliza: GestionPolizaService) {
+    
   }
 
   onReceiveData(poliza: Poliza) {
-    this.poliza = poliza
     this.dataReceived = true
 
-    if (!this.emptyData()) {
+    if (!this.gestionPoliza.emptyData()) {
       this.showSummary = true
     }
   }
 
+  
 
-
-  emptyData() {
-    const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)
-    
-    const hayCoberturas = this.poliza.asistenciaCarretera || this.poliza.responsabilidadCivil || this.poliza.vehiculoSustitucion || this.poliza.colisionAnimales
-
-    const result = filledIn && hayCoberturas
-    return !result;
-  }
-
-  emptyString(str: string) {
-    return (str.length === 0)
-  }
+  
 }

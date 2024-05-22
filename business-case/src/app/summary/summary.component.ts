@@ -2,6 +2,7 @@ import { Poliza } from '../common/models/poliza.model';
 
 import { CommonModule } from '@angular/common';
 import { Component , DoCheck, Input} from '@angular/core';
+import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 
 @Component({
   selector: 'app-summary',
@@ -13,45 +14,14 @@ import { Component , DoCheck, Input} from '@angular/core';
     '../common/styles/styles-common.css'
   ]
 })
-export class SummaryComponent implements DoCheck {
-  @Input() poliza: Poliza;
+export class SummaryComponent {
 
-  nombreApellidos: string;
-  fechaNacimiento: string;
-  marcaVehiculo: string;
+  precioFinal: number = this.gestionPoliza.calculatePrice();
 
-  asistenciaCarretera: boolean = false;
-  responsabilidadCivil: boolean = false;
-  vehiculoSustitucion: boolean = false;
-  colisionAnimales: boolean = false;
+  poliza: Poliza;
 
-
-  constructor() {
-    this.poliza = new Poliza()
-    this.nombreApellidos = "not-init"
-    this.fechaNacimiento = "not-init"
-    this.marcaVehiculo = "not-init"
-  }
-
-  ngDoCheck() {
-    this.nombreApellidos = this.poliza.tomador.nombreApellidos
-    this.fechaNacimiento = this.poliza.tomador.fechaNacimiento
-    this.marcaVehiculo = this.poliza.tomador.marcaVehiculo
-  }
-
-  calculatePrice() {
-    return Number(this.poliza.asistenciaCarretera) * 5 + Number(this.poliza.responsabilidadCivil) * 3 + Number(this.poliza.vehiculoSustitucion) * 3 + Number(this.poliza.colisionAnimales) * 2;
-  }
-
-  getNombreApellidos() {
-    return this.poliza.tomador.nombreApellidos
-  }
-
-  getFechaNacimiento() {
-    return this.poliza.tomador.fechaNacimiento
-  }
-  
-  getMarcaVehiculo() {
-    return this.poliza.tomador.marcaVehiculo
+  constructor(private gestionPoliza: GestionPolizaService) {
+    this.poliza = this.gestionPoliza.poliza
+    this.precioFinal = gestionPoliza.precioFinal
   }
 }
