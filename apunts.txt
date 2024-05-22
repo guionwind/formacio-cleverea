@@ -347,7 +347,10 @@ To use a service in a component (e.g. named ExampleService):
 
 Alternative way of injecting a service (more verbose):
 	private exampleService?: ExampleService;
-	constructor() { this.exampleService = inject(ExampleService) }
+	constructor() { 
+		this.exampleService = inject(ExampleService)
+	}
+
 
 Injector Hierarchy
 	- The injector exposes an instance of the service for the given component as well as all of its children. In fact, they share the same instance.
@@ -359,6 +362,18 @@ This also matters when adding the providers to each component: depends on whethe
 
 Importing a service in another service is possible. You will need to attach metadata to the target class using the @Injectable() decorator.
 This allows a service to receive injections. The service you want to inject does not need @Injectable; however, it is recommendable to add it anyway.
+
+
+Best way of injecting a service, if it is application-wide:
+	@Injectable({providedIn: 'root'})
+	export class MyService{ ... }
+	
+	- Note: same instance within the entire app!
+	- Allows for lazy loading of services (for example, when routing) which can lead to better performance
+
+
+
+
 
 
 
