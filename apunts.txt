@@ -116,7 +116,7 @@ Directives are instructions in the DOM. with/without a template
     - ngStyle -> <p [ngStyle]="{ camelCaseProperty: 'value' }"> || <p [ngStyle]="{ 'propertyname' : 'value' }">
         - allows us to dynamically update styles
     - ngClass
-        - assigns CSS class dynamically
+        - assigns CSS class dynamically. For instance: [ngClass]="{green: isSelected}"
 
 
 Angular snippets in VSCode
@@ -209,7 +209,7 @@ Angular component lifecycle hooks, in order
     - ngDoCheck             -> change detection for re-rendering
     - ngAfterContentInit    -> after the ng-content has been projected into view
     - ngAfterContentChecked -> same as DoCheck for ng-content
-    - ngAfterViewInit       -> after the view (and child views) have been initilized
+    - ngAfterViewInit       -> after the view (and child views) have been initialized
     - ngAfterViewChecked    -> same as DoCheck for the view
     - ngOnDestroy           -> called right before the component will be destroyed
 
@@ -217,5 +217,270 @@ Declare the hooks to be used as interfaces:
 export class ExampleComponent implements OnInit, OnChanges {}
 
 
+-----
+Feedback
+- Utilitzar un enum per a les coberturas
 
+-----
+Exercici:
+- Coberturas amb un enum i ngFor
+- Pintar condicionalmente coberturas seleccionadles en verd
+- Serveis:
+	- Comunicació de datos vehículos -> coberturas+summary a través d'un servei extern
+	- Calcul del preu dins del mateix servei
+- Routing:
+	- Fer-ho en dos steps diferents: 
+		- primer entrar dades, botón siguiente
+		- despres carregar sliders cobertures+summary carregant a temps real, boto pedir seguro fora
+
+----
+** Section 7: Directives Deep Dive **
+
+Attribute vs. Structural directives 
+	- Difference: Structural directives can change the structure of the DOM / View container; attribute only affect properties
+	- Structural directives are preceded by a star character '*'
+
+
+Creating an attribute directive (using the renderer; this is the recommended way):
+
+ng g d exampleName -> creates a directive.ts file; it is advisable to place directives in a different folder
+
+@Directive({
+	selector: '[examplePotato]'
+
+})
+export class ExamplePotatoDirective implements OnInit {
+		
+	constructor(private element: ElementRef, private renderer: Renderer2) {}
+
+	ngOnInit() {
+		//this.renderer.setStyle(this.element.nativeElement, 'CSS property', 'value', 'flags');  //flags are optional
+	}
+
+	//listeners for a specific event on the element that this directive is attached to
+	@HostListener('mouseenter') mouseover(eventData: Event) {
+		this.renderer.setStyle(this.element.nativeElement, 'background-color', 'blue');
+	}
+	@HostListener('mouseenter') mouseleave(eventData: Event) {
+		this.renderer.setStyle(this.element.nativeElement, 'background-color', 'transparent');
+	}
+
+
+}
+Then, use the selector inside any HTML tag:
+	<p examplePotato> This text is styled using the attribute directive </p>
+
+
+See the Angular documentation for more info on everything the renderer can do on the DOM.
+
+
+Alternatively, if you only need to modify a property of the host component:
+	@HostBinding('style.backgroundColor') example: string = 'transparent';
+
+Then, in the @HostListener you'd simply set this.backgroundColor = 'whatever-value'
+
+This would replace the renderer.
+
+
+You can also use property binding with inputs on custom directives, as with components. For instance, to decide the highlight-color.
+	- If one of the aliases is the same as the selector of the directive, then simply property binding to it will automatically also call the directive.
+
+
+
+Structural directives must be indicated with a star.
+
+Example implemented structural directive:
+
+@Directive({
+	selector: '[appUnless]'
+
+})
+export class UnlessDirective {
+	//IMPORTANT: this input has to be the same name as the selector
+	@Input() set appUnless(condition: boolean) {
+		if (!condition) {
+			this.vcRef.createEmbeddedView(this.templateRef);
+		}
+		else {
+			this.vcRef.clear();
+		}
+	}
+		
+	constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef) {
+		
+	}
+
+
+}
+
+templateRef represents the host component (a chunk of HTML to be rendered), vcRef represents the view where it will be rendered.
+
+Call it using *appUnless='exampleValue'
+
+
+New structural directive: ngSwitch
+
+<div [ngSwitch]="value">
+	<p *ngSwitchCase></p>
+	<p *ngSwitchCase></p>
+	...
+	<p *ngSwitchDefault></p>
+</div>
+
+
+
+** Section 9: Using Services & Dependency Injection **
+
+
+Services allow us to outsource code. They are particularly useful for data processing and for communication between unrelated components.
+This allows any part of our application to interact with the others, without the need of making a parent-child chain and repeating code.
+
+Create services in a common folder and follow the naming convention (example.service.ts).
+Services are just normal TypeScript classes, without any decorator.
+IMPORTANT: to use a service, do not instantiate the service manually; use a dependency injector instead. (Angular)
+
+To use a service in a component (e.g. named ExampleService):
+	- constructor (private example: ExampleService) {} 
+	- inside the @Component decorator -> providers: [ExampleService]
+	- add the import
+	- then, access the property using this.example.whateverServiceMethod(data_to_pass);
+
+Alternative way of injecting a service (more verbose):
+	private exampleService?: ExampleService;
+	constructor() { 
+		this.exampleService = inject(ExampleService)
+	}
+
+
+Injector Hierarchy
+	- The injector exposes an instance of the service for the given component as well as all of its children. In fact, they share the same instance.
+	- A service can be provided to:
+		- AppModule: the same instance applies to the whole app
+		- AppComponent: available for all commponents, but not for other services
+		- Other components: available to that component and its children
+This also matters when adding the providers to each component: depends on whether you need a single or several instances across the hierarchy.
+
+Importing a service in another service is possible. You will need to attach metadata to the target class using the @Injectable() decorator.
+This allows a service to receive injections. The service you want to inject does not need @Injectable; however, it is recommendable to add it anyway.
+As usual, instantiate the service inside the constructor.
+
+
+Best way of injecting a service, if it is application-wide:
+	@Injectable({providedIn: 'root'})
+	export class MyService{ ... }
+	
+	- Note: same instance within the entire app!
+	- Allows for lazy loading of services (for example, when routing) which can lead to better performance
+
+
+
+
+** Section 11: Changing pages with routing **
+
+Routing allows an Angular Single Page Application to change major parts of the DOM in order to make it seem that a new page has been loaded.
+This is accomplished by changing the URL to load different HTML templates.
+Useful if you have several sections within your webpage and want to navigate through them seamlessly.
+
+To set up routing paths:
+- Create a global constant variable appRoutes: Routes = [{ path: '', component: Example1Component}, { path: 'example', component: Example2Component}, ...  ]	// This would lead to localhost:4200/example
+- Register the new routes by importing RouterModule.forRoot(appRoutes)
+- Use the <router-outlet></router-outlet> directive to mark the place to render the components of the selected route 
+
+To select the route: We do not use href in order to avoid reloading the page. Instead:
+<a routerLink="/users/something"> </a>
+
+routerLink can also be used with databinding, even with an array: [routerLink] = "['/users','something']"
+
+Watch out for relative vs. absolute paths.
+	- Set a relative path by not using a forward slash, or by using ./
+	- Set an absolute path by leading with a forward slash. 
+	- Of course, you can use paths as if you were navigating a directory.
+
+To style a router link: routerLinkActive = "examplecssclass" will apply to all paths that contain it. For instance, styling "/" will style that component in every single route
+Set [routerLinkActiveOptions]= "{exact: true}" to only style the exact route.
+
+
+
+Trigger navigation programatically:
+	- Inject: private router: Router inside the constructor, as you'd do with a service
+	- this.router.navigate(['/newpath', 'here', 'example'])		//would go to localhost:4200/newpath/here/example
+		- Note: router.navigate() does not know the path it is currently in.
+
+	- Access the current path by injecting: private currentRoute: ActivatedRoute into the constrcutor
+
+	- Relative paths: set relativeTo attribute (for instance, to the current route): router.navigate([...], {relativeTo: this.currentRoute})
+	
+Passing a parameter to a route
+	- users/:id will send the 'id' parameter to the target route
+	- Retrieving the parameter: this.currentRoute.snapshot.params['param_name']	//this only retrieves the parameters once, on creation.
+Fetching route params reactively:
+	- this.currentRoute.params
+		.subscribe(
+			(params: Params) => {this.id = params[id]}
+		)
+	- Note: this is an observable. Therefore, the subscription will not be destroyed alongside the component.
+	- It is good practice to unsubscribe manually by saving the subscription to a property paramsSubscription: Subscription, and then ngOnDestroy() {paramsSubscription.unsubscribe()}.
+
+Query params
+	- <a [queryParams]="{key:value, key2:value}">
+	- Retrieving: Either accessing a snapshot, or using the observable.
+
+Fragment
+	- <a fragment: "examplefragment" > would attach a fragment to an url like this -> localhost:4200/#examplefragment
+	- Retrieving, same as query params.
+
+Programatically: router.navigate([...], { queryParams:{...}, fragment:'...' })
+
+(fast way of converting a string to number: +'1' -> converts string '1' to number 1)
+
+
+Nested routes: load child components using child routes
+	- Inside appRoutes, { path: 'example', component: ExampleComponent, children: [{path:'...', component: ChildComponent}] }
+	- Router outlets can only load components at their given level; therefore, ExampleComponent.html should contain a <router-outlet> in order to load ChildComponent
+	- Children paths are """relative""" to their parent's. Useful to categorize routes by the parameters they take in.
+
+queryParamsHandling parameter of .navigate()
+	- merge (self explanatory)
+	- preserve (keep the old ones)
+	- drop (default behaviour)
+
+Redirecting routes -> Instead of specifying component in a route, use redirectTo: '/another-route'
+Wildcard route -> set your path: '**' in a route. Make sure it is the very last route in the configuration.
+
+Matching strategies for routes: set pathMatch: prefix (default), full (exact same path, including parameters)
+
+
+It is good practice to outsource the route configuration to another module: app-routing.module.ts (or app.routes.ts in a standalone component project)
+In a project using modules,
+- Move away the appRoutes array to right before the @NgModule decorator in the new module,
+- Register the routes and establish the appropiate imports.
+- In app.routes.ts @NgModule, set exports:[RouterModule]
+
+
+! Guards
+- Guards are intermediaries, useful to protect routes.
+- They work like a special type of service. Example below:
+
+export class AuthGuard implements CanActivate{
+	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+		this.authService.isAuthenticated().then(
+			(authenticated: boolean) => {
+				if (authenticated) {
+					return true;
+				} else {
+					this.router.navigate(['/']);
+					return false;
+				}
+			}
+		);
+	}
+}
+As we can see, they can be ran both synchronously or asynchronously.
+To integrate the example guard:
+	{ path: 'example', canActivate: [AuthGuard], component: ExampleComponent, children: [{path:'...', component: ChildComponent}] }
+
+In order to apply the guard only to the children, use the canActivateChild guard instead, which takes the same form.
+
+- canDeactivate
+ 
 
