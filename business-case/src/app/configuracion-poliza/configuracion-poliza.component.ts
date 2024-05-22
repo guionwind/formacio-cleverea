@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderinputComponent } from '../common/components/sliderinput/sliderinput.component';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
-import { Cobertura } from '../common/enums/cobertura.enum';
 
 @Component({
   selector: 'app-configuracion-poliza',

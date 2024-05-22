@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { Poliza } from '../common/models/poliza.model';
 import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
-import { Tomador } from '../common/models/tomador.model';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 
 
