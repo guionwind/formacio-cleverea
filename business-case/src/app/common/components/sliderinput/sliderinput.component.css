@@ -7,7 +7,7 @@
     input {
         display: none;
         &:checked + .slider {
-        background-color: springgreen;
+        background-color: mediumspringgreen;
         }
         &:checked + .slider::after {
         -webkit-transform: translateX(26px);
@@ -36,4 +36,8 @@
         transition: 0.5s;
         }
     }
+}
+
+.activated {
+    color: green
 }

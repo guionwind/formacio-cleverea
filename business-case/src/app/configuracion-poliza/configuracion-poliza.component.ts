@@ -14,12 +14,6 @@ import { SliderinputComponent } from '../common/components/sliderinput/sliderinp
 })
 
 export class ConfiguracionPolizaComponent {
-  /* @Output() sendUpdate = new EventEmitter<{
-    asistencia: boolean,
-    responsabilidad: boolean,
-    vehiculo: boolean,
-    colision: boolean
-  }>(); */
 
   @Output() sendAsistencia = new EventEmitter<boolean>();
   @Output() sendResponsabilidad = new EventEmitter<boolean>();
@@ -39,15 +33,6 @@ export class ConfiguracionPolizaComponent {
     this.colision = false;
   }
 
-  //seria millor fer servir un event per cada variable, per tal de no enviar el bloc sencer cada cop?
-  /* onSwitch() {
-    this.sendUpdate.emit({
-      asistencia: this.asistencia,
-      responsabilidad: this.responsabilidad,
-      vehiculo: this.vehiculo,
-      colision: this.colision
-    });
-  } */
   onAsistencia(bool: boolean) {
     this.sendAsistencia.emit(bool)
   }

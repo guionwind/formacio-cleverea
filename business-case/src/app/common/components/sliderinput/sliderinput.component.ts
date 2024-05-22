@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-sliderinput',
   standalone: true,
   imports: [
     FormsModule,
+    CommonModule
   ],
   templateUrl: './sliderinput.component.html',
   styleUrl: './sliderinput.component.css'
