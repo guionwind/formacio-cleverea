@@ -362,6 +362,7 @@ This also matters when adding the providers to each component: depends on whethe
 
 Importing a service in another service is possible. You will need to attach metadata to the target class using the @Injectable() decorator.
 This allows a service to receive injections. The service you want to inject does not need @Injectable; however, it is recommendable to add it anyway.
+As usual, instantiate the service inside the constructor.
 
 
 Best way of injecting a service, if it is application-wide:
