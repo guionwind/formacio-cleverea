@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Cobertura } from '../../enums/cobertura.enum';
 
 
 @Component({
@@ -14,18 +15,20 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './sliderinput.component.css'
 })
 export class SliderinputComponent {
-  @Input() description: string;
+  //@Input() description: string;
+  //moure a un adapter?
+  @Input() cobertura: Cobertura;
   bool: boolean;
 
-  @Output() sendUpdate = new EventEmitter<boolean>();
+  @Output() sendUpdate = new EventEmitter<[boolean, Cobertura]>();
 
   constructor() {
-    this.description = ""
+    //this.description = ""
     this.bool = false
   }
 
   onSwitch() {
-    this.sendUpdate.emit(this.bool);
+    this.sendUpdate.emit([this.bool, this.cobertura]);
   }
 
 }

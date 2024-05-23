@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Poliza } from '../models/poliza.model';
+import { Cobertura } from '../enums/cobertura.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,26 @@ export class GestionPolizaService {
   
   updateColision(bool: boolean) {
     this.poliza.colisionAnimales = bool;
+    this.precioFinal = this.calculatePrice();
+  }
+
+  updateCobertura(bool: boolean, cobertura:Cobertura) {
+    switch(cobertura.){
+      case Cobertura.AsistenciaCarretera:
+        this.poliza.asistenciaCarretera = bool;
+        break;
+      case Cobertura.ResponsabilidadCivil:
+        this.poliza.responsabilidadCivil = bool;
+        break;
+      case Cobertura.vehiculoSustitucion:
+        this.poliza.vehiculoSustitucion = bool;
+        break;
+      case Cobertura.ColisionAnimales:
+        this.poliza.colisionAnimales = bool;
+        break;
+      default:
+        console.log("Not a valid cobertura enum type")
+    }
     this.precioFinal = this.calculatePrice();
   }
 

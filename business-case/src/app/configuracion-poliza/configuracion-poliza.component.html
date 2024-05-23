@@ -1,26 +1,12 @@
 <div>
-  <div>
-    <app-sliderinput
-      [description]="'Asistencia en carretera'"
-      (sendUpdate)="onAsistencia($event)"
-    ></app-sliderinput>
-  </div>
-  <div>
-    <app-sliderinput
-      [description]="'Responsabilidad civil'"
-      (sendUpdate)="onResponsabilidad($event)"
-    ></app-sliderinput>
-  </div>
-  <div>
-    <app-sliderinput
-      [description]="'Vehículo de sustitución'"
-      (sendUpdate)="onVehiculo($event)"
-    ></app-sliderinput>
-  </div>
-  <div>
-    <app-sliderinput
-      [description]="'Colisión con animales'"
-      (sendUpdate)="onColision($event)"
-    ></app-sliderinput>
+  <div *ngFor="let cobertura of keyValueArray">
+    <!-- <app-sliderinput 
+    [description]="cobertura"
+    (sendUpdate)="onUpdate($event)">
+    </app-sliderinput> -->
+    <app-sliderinput 
+    [cobertura]="cobertura"
+    (sendUpdate)="onUpdate($event)">
+    </app-sliderinput>
   </div>
 </div>

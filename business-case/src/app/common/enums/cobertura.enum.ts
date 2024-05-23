@@ -1,6 +1,9 @@
 export enum Cobertura {
-    AsistenciaCarretera = "AsistenciaCarretera",
-    ResponsabilidadCivil = "ResponsabilidadCivil",
-    vehiculoSustitucion = "VehiculoSustitucion",
-    ColisionAnimales = "ColisionAnimales"
+    AsistenciaCarretera = "Asistencia en carretera",
+    ResponsabilidadCivil = "Responsabilidad civil",
+    vehiculoSustitucion = "Vehiculo de sustitución",
+    ColisionAnimales = "Colisión con animales"
 }
+
+
+
