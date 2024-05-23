@@ -20,12 +20,10 @@ export class SliderinputComponent {
   @Output() sendUpdate = new EventEmitter<{activate:boolean, id:string}>();
 
   constructor() {
-    this.config = {id:"", description:""}
-    this.bool = false
   }
 
   onSwitch() {
-    this.sendUpdate.emit({activate: this.bool, id: this.config.id});
+    this.sendUpdate.emit({activate: this.bool, id: this.config.description});
   }
 
 }

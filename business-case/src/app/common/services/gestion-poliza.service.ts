@@ -11,7 +11,8 @@ export class GestionPolizaService {
 
   precioFinal: number = 0;
 
-  constructor() { }
+  constructor() {
+  }
 
   updateCobertura(event: {activate:boolean, id:string}) {
     switch(event.id){
@@ -28,7 +29,7 @@ export class GestionPolizaService {
         this.poliza.colisionAnimales = event.activate;
         break;
       default:
-        console.log("Not a valid cobertura enum type")
+        console.log("Not covered enum type! Check poliza.model or cobertura.enum")
     }
     this.precioFinal = this.calculatePrice();
   }
@@ -37,10 +38,11 @@ export class GestionPolizaService {
     return this.precioFinal = Number(this.poliza.asistenciaCarretera) * 5 + Number(this.poliza.responsabilidadCivil) * 3 + Number(this.poliza.vehiculoSustitucion) * 3 + Number(this.poliza.colisionAnimales) * 2;
   }
 
+  //use ifs to to prevent assigning null/undefined values
   updateTomador(nombre:string, fecha:string, marca:string) {
-    this.poliza.tomador.nombreApellidos = nombre;
-    this.poliza.tomador.fechaNacimiento = fecha;
-    this.poliza.tomador.marcaVehiculo = marca;
+    if (nombre) this.poliza.tomador.nombreApellidos = nombre;
+    if (fecha) this.poliza.tomador.fechaNacimiento = fecha;
+    if (marca) this.poliza.tomador.marcaVehiculo = marca;
   }
 
   emptyData() {

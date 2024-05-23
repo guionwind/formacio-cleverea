@@ -1,4 +1,3 @@
-import { Poliza } from './common/models/poliza.model';
 import { DatosVehiculoComponent } from './datos-vehiculo/datos-vehiculo.component';
 
 import { Component } from '@angular/core';
@@ -32,15 +31,10 @@ export class AppComponent {
     
   }
 
-  onReceiveData(poliza: Poliza) {
-    this.dataReceived = true
 
-    if (!this.gestionPoliza.emptyData()) {
-      this.showSummary = true
-    }
+  onReceiveData() {
+    this.dataReceived = true
+    this.showSummary = !this.gestionPoliza.emptyData()
   }
 
-  
-
-  
 }

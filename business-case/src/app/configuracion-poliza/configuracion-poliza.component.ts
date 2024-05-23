@@ -26,23 +26,8 @@ export class ConfiguracionPolizaComponent {
   constructor(private gestionPoliza: GestionPolizaService) {
   }
 
-/*   onAsistencia(bool: boolean) {
-    this.gestionPoliza.updateAsistencia(bool)
-  }
-
-  onResponsabilidad(bool: boolean) {
-    this.gestionPoliza.updateResponsabilidad(bool)
-  }
-
-  onVehiculo(bool: boolean) {
-    this.gestionPoliza.updateVehiculo(bool)
-  }
-
-  onColision(bool: boolean) {
-    this.gestionPoliza.updateColision(bool)
-  } */
-
   onUpdate(event: {activate:boolean, id:string}) {
     this.gestionPoliza.updateCobertura(event)
+    
   }
 }

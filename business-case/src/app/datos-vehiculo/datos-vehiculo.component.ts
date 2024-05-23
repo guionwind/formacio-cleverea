@@ -27,36 +27,14 @@ export class DatosVehiculoComponent {
   nombre: string
   fecha: string
   marca: string
-  poliza: Poliza
 
+  //inicialitzar valors buits; si no peta gestionPoliza.updateTomador en rebre valors undefined
   constructor(private gestionPoliza:GestionPolizaService) {
-    this.nombre = ""
-    this.fecha = ""
-    this.marca = ""
-    this.poliza = new Poliza()
   }
 
   onSend() {
-    
     this.gestionPoliza.updateTomador(this.nombre, this.fecha, this.marca)
-
-    this.sendData.emit(this.poliza)
-  }
-
-  onAsistencia(bool: boolean) {
-    this.poliza.asistenciaCarretera = bool
-  }
-
-  onResponsabilidad(bool: boolean) {
-    this.poliza.responsabilidadCivil = bool
-  }
-
-  onVehiculo(bool: boolean) {
-    this.poliza.vehiculoSustitucion = bool
-  }
-
-  onColision(bool: boolean) {
-    this.poliza.colisionAnimales = bool
+    this.sendData.emit()
   }
 
 }
