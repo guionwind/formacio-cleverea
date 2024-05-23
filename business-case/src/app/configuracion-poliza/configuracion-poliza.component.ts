@@ -4,6 +4,7 @@ import { SliderinputComponent } from '../common/components/sliderinput/sliderinp
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 import { Cobertura } from '../common/enums/cobertura.enum';
 import { CommonModule } from '@angular/common';
+import { coberturaArray } from './configuracion-poliza.models';
 
 @Component({
   selector: 'app-configuracion-poliza',
@@ -20,12 +21,12 @@ import { CommonModule } from '@angular/common';
 export class ConfiguracionPolizaComponent {
 
   coberturas: Cobertura = Cobertura.AsistenciaCarretera;
-  keyValueArray = Object.values(Cobertura);
+  valueArray = coberturaArray;
 
   constructor(private gestionPoliza: GestionPolizaService) {
   }
 
-  onAsistencia(bool: boolean) {
+/*   onAsistencia(bool: boolean) {
     this.gestionPoliza.updateAsistencia(bool)
   }
 
@@ -39,9 +40,9 @@ export class ConfiguracionPolizaComponent {
 
   onColision(bool: boolean) {
     this.gestionPoliza.updateColision(bool)
-  }
+  } */
 
-  onUpdate(bool: boolean, cobertura: Cobertura) {
-    this.gestionPoliza.updateCobertura(bool, cobertura)
+  onUpdate(event: {activate:boolean, id:string}) {
+    this.gestionPoliza.updateCobertura(event)
   }
 }

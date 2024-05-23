@@ -1,7 +1,7 @@
 import { Poliza } from '../common/models/poliza.model';
 
 import { CommonModule } from '@angular/common';
-import { Component , DoCheck, Input} from '@angular/core';
+import { Component } from '@angular/core';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 
 @Component({

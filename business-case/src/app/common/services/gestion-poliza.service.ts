@@ -13,39 +13,19 @@ export class GestionPolizaService {
 
   constructor() { }
 
-  updateAsistencia(bool: boolean) {
-    this.poliza.asistenciaCarretera = bool;
-    this.precioFinal = this.calculatePrice();
-    }
-
-  updateResponsabilidad(bool: boolean) {
-    this.poliza.responsabilidadCivil = bool;
-    this.precioFinal = this.calculatePrice();
-    }
-  
-  updateVehiculo(bool: boolean) {
-    this.poliza.vehiculoSustitucion = bool;
-    this.precioFinal = this.calculatePrice();
-    }
-  
-  updateColision(bool: boolean) {
-    this.poliza.colisionAnimales = bool;
-    this.precioFinal = this.calculatePrice();
-  }
-
-  updateCobertura(bool: boolean, cobertura:Cobertura) {
-    switch(cobertura.){
+  updateCobertura(event: {activate:boolean, id:string}) {
+    switch(event.id){
       case Cobertura.AsistenciaCarretera:
-        this.poliza.asistenciaCarretera = bool;
+        this.poliza.asistenciaCarretera = event.activate;
         break;
       case Cobertura.ResponsabilidadCivil:
-        this.poliza.responsabilidadCivil = bool;
+        this.poliza.responsabilidadCivil = event.activate;
         break;
-      case Cobertura.vehiculoSustitucion:
-        this.poliza.vehiculoSustitucion = bool;
+      case Cobertura.VehiculoSustitucion:
+        this.poliza.vehiculoSustitucion = event.activate;
         break;
       case Cobertura.ColisionAnimales:
-        this.poliza.colisionAnimales = bool;
+        this.poliza.colisionAnimales = event.activate;
         break;
       default:
         console.log("Not a valid cobertura enum type")

@@ -1,7 +1,8 @@
 <div style="display: inline-flex">
-<!--   <p [ngClass]="{'activated': bool}">{{ description }}</p>
--->  <p [ngClass]="{'activated': bool}">{{ cobertura.valueOf() }}</p>
-    <div style="margin-right: 10px"></div>
+  <!--   <p [ngClass]="{'activated': bool}">{{ description }}</p>
+-->
+  <p [ngClass]="{ activated: bool }">{{ config.description }}</p>
+  <div style="margin-right: 10px"></div>
   <label class="toggle-switch">
     <input type="checkbox" [(ngModel)]="bool" (change)="onSwitch()" />
     <div class="slider"></div>

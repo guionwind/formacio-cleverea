@@ -1,12 +1,6 @@
 <div>
-  <div *ngFor="let cobertura of keyValueArray">
-    <!-- <app-sliderinput 
-    [description]="cobertura"
-    (sendUpdate)="onUpdate($event)">
-    </app-sliderinput> -->
-    <app-sliderinput 
-    [cobertura]="cobertura"
-    (sendUpdate)="onUpdate($event)">
+  <div *ngFor="let cobertura of valueArray">
+    <app-sliderinput [config]="cobertura" (sendUpdate)="onUpdate($event)">
     </app-sliderinput>
   </div>
 </div>
