@@ -9,11 +9,16 @@
     <app-datos-vehiculo (sendData)="onReceiveData()"></app-datos-vehiculo>
   </div>
   <div style="position: absolute; right: 20px">
+    <router-outlet></router-outlet>
     <app-summary
       *ngIf="showSummary; else missingData"
       class="flexbox"
     ></app-summary>
   </div>
+</div>
+
+<div style="display: inline">
+  <a routerLink="/summary">Siguiente paso</a>
 </div>
 
 <ng-template #missingData>

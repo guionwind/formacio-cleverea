@@ -7,7 +7,10 @@ import { GestionPolizaService } from '../common/services/gestion-poliza.service'
 @Component({
   selector: 'app-summary',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    
+  ],
   templateUrl: './summary.component.html',
   styleUrls: [
     './summary.component.css',
@@ -15,12 +18,10 @@ import { GestionPolizaService } from '../common/services/gestion-poliza.service'
   ]
 })
 export class SummaryComponent {
-
-  precioFinal: number = this.gestionPoliza.calculatePrice();
-
+  precioFinal: number;
   poliza: Poliza;
 
-  constructor(private gestionPoliza: GestionPolizaService) {
+  constructor(private gestionPoliza: GestionPolizaService ) {
     this.poliza = this.gestionPoliza.poliza
     this.precioFinal = gestionPoliza.precioFinal
   }
