@@ -28,6 +28,6 @@ export class ConfiguracionPolizaComponent {
 
   onUpdate(event: {activate:boolean, id:string}) {
     this.gestionPoliza.updateCobertura(event)
-    
+    this.gestionPoliza.priceObservable.next(this.gestionPoliza.calculatePrice());
   }
 }

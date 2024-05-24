@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Poliza } from '../models/poliza.model';
 import { Cobertura } from '../enums/cobertura.enum';
+import { Subject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ export class GestionPolizaService {
   poliza: Poliza = new Poliza();
 
   precioFinal: number = 0;
+
+  priceObservable = new Subject<number>()
 
   constructor() {
   }
@@ -31,7 +35,6 @@ export class GestionPolizaService {
       default:
         console.log("Not covered enum type! Check poliza.model or cobertura.enum")
     }
-    this.precioFinal = this.calculatePrice();
   }
 
   calculatePrice() {

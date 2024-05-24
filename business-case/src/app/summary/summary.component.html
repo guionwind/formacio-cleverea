@@ -1,10 +1,12 @@
 <div class="fillbox">
-  <app-configuracion-poliza></app-configuracion-poliza>
   <div>
     <h3>Precio final</h3>
     <p>{{ precioFinal }}€ / mes</p>
+    <hr class="horizontal-line" />
   </div>
+  <app-configuracion-poliza></app-configuracion-poliza>
   <hr class="horizontal-line" />
+
   <div>
     <h3>Asegurado</h3>
     <p>Nombre: {{ poliza.tomador.nombreApellidos }}</p>
@@ -17,7 +19,7 @@
   </div>
   <hr class="horizontal-line" />
   <div>
-    <h3>Coberturas</h3>
+    <h3>Coberturas seleccionadas</h3>
     <p *ngIf="poliza.asistenciaCarretera">Asistencia en carretera - 5€/mes</p>
     <p *ngIf="poliza.responsabilidadCivil">Responsabilidad civil - 3€/mes</p>
     <p *ngIf="poliza.vehiculoSustitucion">Vehículo de sustitución - 3€/mes</p>
