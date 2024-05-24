@@ -592,4 +592,8 @@ Remember to unsubscribe from subjects when they are no longer necessary!
 
 
 
+**dinamic vs. imperatiu
+
+private disabledButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+public disabledButton$: Observable<boolean> = this.disabledButtonSubject.asObservable();
 

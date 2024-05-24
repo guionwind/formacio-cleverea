@@ -1,7 +1,8 @@
+import { CalculoPrecioPolizaService } from './calculo-precio-poliza.service';
 import { Injectable } from '@angular/core';
 import { Poliza } from '../models/poliza.model';
 import { Cobertura } from '../enums/cobertura.enum';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Tomador } from '../models/tomador.model';
 
 
@@ -10,48 +11,74 @@ import { Tomador } from '../models/tomador.model';
 })
 export class GestionPolizaService {
 
-  poliza: Poliza = new Poliza();
 
-  precioFinal: number = 0;
+  //set as private, use getters/setters
+  private priceTotalSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0)
+  public priceTotal$: Observable<number> = this.priceTotalSubject.asObservable()
 
-  priceSubject: Subject<number> = new Subject()
+  private polizaSubject: BehaviorSubject<Poliza> = new BehaviorSubject<Poliza>(new Poliza)
+  public poliza$: Observable<Poliza> = this.polizaSubject.asObservable()
 
-  tomadorSubject: Subject<Tomador> = new Subject()
+  private tomadorSubject: BehaviorSubject<Tomador> = new BehaviorSubject<Tomador>(new Tomador)
+  public tomador$: Observable<Tomador> = this.tomadorSubject.asObservable()
 
-  constructor() {
+
+  constructor(private calculadora: CalculoPrecioPolizaService) {
   }
 
   updateCobertura(event: {activate:boolean, id:string}) {
+    const poliza = this.polizaSubject.getValue()
     switch(event.id){
       case Cobertura.AsistenciaCarretera:
-        this.poliza.asistenciaCarretera = event.activate;
+        poliza.asistenciaCarretera = event.activate;
         break;
       case Cobertura.ResponsabilidadCivil:
-        this.poliza.responsabilidadCivil = event.activate;
+        poliza.responsabilidadCivil = event.activate;
         break;
       case Cobertura.VehiculoSustitucion:
-        this.poliza.vehiculoSustitucion = event.activate;
+        poliza.vehiculoSustitucion = event.activate;
         break;
       case Cobertura.ColisionAnimales:
-        this.poliza.colisionAnimales = event.activate;
+        poliza.colisionAnimales = event.activate;
         break;
       default:
         console.log("Not covered enum type! Check poliza.model or cobertura.enum")
     }
+    this.setPoliza(poliza)
   }
 
   calculatePrice() {
-    return this.precioFinal = Number(this.poliza.asistenciaCarretera) * 5 + Number(this.poliza.responsabilidadCivil) * 3 + Number(this.poliza.vehiculoSustitucion) * 3 + Number(this.poliza.colisionAnimales) * 2;
+    return this.calculadora.calculatePrice(this.polizaSubject.getValue())
   }
 
-  //use ifs to to prevent assigning null/undefined values
-  updateTomador(nombre:string, fecha:string, marca:string) {
-    if (nombre) this.poliza.tomador.nombreApellidos = nombre;
-    if (fecha) this.poliza.tomador.fechaNacimiento = fecha;
-    if (marca) this.poliza.tomador.marcaVehiculo = marca;
+
+  updatePrice() {
+    this.priceTotalSubject.next(this.calculatePrice())
   }
 
-  emptyData() {
+  getPriceTotal() {
+    return this.priceTotal$
+  }
+
+  getPoliza() {
+    return this.poliza$
+  }
+
+  setPoliza(poliza: Poliza) {
+    this.polizaSubject.next(poliza)
+  }
+
+  getTomador() {
+    return this.tomador$
+  }
+
+  setTomador(tomador: Tomador) {
+    this.tomadorSubject.next(tomador)
+  }
+
+  
+
+  /* emptyData() {
     const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)
     
     const hayCoberturas = this.poliza.asistenciaCarretera || this.poliza.responsabilidadCivil || this.poliza.vehiculoSustitucion || this.poliza.colisionAnimales
@@ -62,14 +89,8 @@ export class GestionPolizaService {
 
   emptyString(str: string) {
     return (str.length === 0)
-  }
+  } */
 
-  setTomador(tomador: Tomador) {
-    this.tomadorSubject.next(tomador)
-  }
-
-  getTomador(): Subject<Tomador> {
-    return this.tomadorSubject
-  }
+  
 
 }

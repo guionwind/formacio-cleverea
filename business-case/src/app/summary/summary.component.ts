@@ -1,11 +1,12 @@
 import { Poliza } from '../common/models/poliza.model';
 
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 import { RouterOutlet } from '@angular/router';
 import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs-compat';
+import { Tomador } from '../common/models/tomador.model';
 
 @Component({
   selector: 'app-summary',
@@ -21,26 +22,14 @@ import { Subscription } from 'rxjs';
     '../common/styles/styles-common.css'
   ]
 })
-export class SummaryComponent implements OnInit, OnDestroy{
-  precioFinal: number = 0;
-  poliza: Poliza;
-  private priceObsSubscription: Subscription
-  private tomadorSubscription: Subscription
+export class SummaryComponent {
+  //dinamic vs imperatiu
+  precioFinal$: Observable<number> = this.gestionPoliza.getPriceTotal();
+  poliza$: Observable<Poliza> = this.gestionPoliza.getPoliza();
+  tomador$: Observable<Tomador> = this.gestionPoliza.getTomador();
 
   constructor(private gestionPoliza: GestionPolizaService) {
-    this.poliza = this.gestionPoliza.poliza
-    this.precioFinal = this.gestionPoliza.precioFinal
+    
   }
 
-  ngOnInit() {
-    this.priceObsSubscription = this.gestionPoliza.priceSubject.subscribe(data => {this.precioFinal = data})
-    this.tomadorSubscription = this.gestionPoliza.tomadorSubject.subscribe(data => {this.poliza.tomador = data})
-
-  }
-
-
-  ngOnDestroy() {
-    this.priceObsSubscription.unsubscribe()
-    this.tomadorSubscription.unsubscribe()
-  }
 }

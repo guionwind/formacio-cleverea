@@ -1,28 +1,36 @@
 <div class="fillbox">
   <div>
     <h3>Precio final</h3>
-    <p>{{ precioFinal }}€ / mes</p>
+    <p>{{ precioFinal$ | async }}€ / mes</p>
     <hr class="horizontal-line" />
   </div>
   <app-configuracion-poliza></app-configuracion-poliza>
   <hr class="horizontal-line" />
 
-  <div>
-    <h3>Asegurado</h3>
-    <p>Nombre: {{ poliza.tomador.nombreApellidos }}</p>
-    <p>Fecha de nacimiento: {{ poliza.tomador.fechaNacimiento }}</p>
-  </div>
-  <hr class="horizontal-line" />
-  <div>
-    <h3>Tu vehículo</h3>
-    <p>Marca: {{ poliza.tomador.marcaVehiculo }}</p>
-  </div>
-  <hr class="horizontal-line" />
-  <div>
-    <h3>Coberturas seleccionadas</h3>
-    <p *ngIf="poliza.asistenciaCarretera">Asistencia en carretera - 5€/mes</p>
-    <p *ngIf="poliza.responsabilidadCivil">Responsabilidad civil - 3€/mes</p>
-    <p *ngIf="poliza.vehiculoSustitucion">Vehículo de sustitución - 3€/mes</p>
-    <p *ngIf="poliza.colisionAnimales">Colision con animales - 2€/mes</p>
+  <div *ngIf="tomador$ | async as tomador">
+    <div>
+      <h3>Asegurado</h3>
+      <p>Nombre: {{ tomador.nombreApellidos }}</p>
+      <p>Fecha de nacimiento: {{ tomador.fechaNacimiento }}</p>
+    </div>
+    <hr class="horizontal-line" />
+    <div>
+      <h3>Tu vehículo</h3>
+      <p>Marca: {{ tomador.marcaVehiculo }}</p>
+    </div>
+    <hr class="horizontal-line" />
+    <div *ngIf="poliza$ | async as poliza">
+      <h3>Coberturas seleccionadas</h3>
+      <p *ngIf="poliza.asistenciaCarretera">
+        Asistencia en carretera - 5€ / mes
+      </p>
+      <p *ngIf="poliza.responsabilidadCivil">
+        Responsabilidad civil - 3€ / mes
+      </p>
+      <p *ngIf="poliza.vehiculoSustitucion">
+        Vehículo de sustitución - 3€ / mes
+      </p>
+      <p *ngIf="poliza.colisionAnimales">Colision con animales - 2€ / mes</p>
+    </div>
   </div>
 </div>
