@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Poliza } from '../common/models/poliza.model';
 import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
 
@@ -22,7 +21,6 @@ import { GestionPolizaService } from '../common/services/gestion-poliza.service'
   ]
 })
 export class DatosVehiculoComponent {
-  @Output() sendData = new EventEmitter<Poliza>();
 
   nombre: string
   fecha: string
@@ -34,7 +32,6 @@ export class DatosVehiculoComponent {
 
   onSend() {
     this.gestionPoliza.updateTomador(this.nombre, this.fecha, this.marca)
-    this.sendData.emit()
   }
 
 }

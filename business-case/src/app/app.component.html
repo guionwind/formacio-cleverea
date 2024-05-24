@@ -4,25 +4,26 @@
 
 <hr class="horizontal-line" />
 
-<div style="position: relative; top: 20px">
+<div style="position: relative; top: 30px">
   <div style="position: absolute; left: 20px">
-    <app-datos-vehiculo (sendData)="onReceiveData()"></app-datos-vehiculo>
+    <app-datos-vehiculo></app-datos-vehiculo>
   </div>
-  <div style="position: absolute; right: 20px">
+  <div style="position: absolute; right: 20px; display: inline">
     <router-outlet></router-outlet>
-    <app-summary
-      *ngIf="showSummary; else missingData"
-      class="flexbox"
-    ></app-summary>
   </div>
 </div>
-
 <div style="display: inline">
-  <a routerLink="/summary">Siguiente paso</a>
+  <a
+    routerLink="/summary"
+    routerLinkActive="button-main-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="button-main"
+    >Siguiente paso
+  </a>
 </div>
 
-<ng-template #missingData>
+<!-- <ng-template #missingData>
   <p *ngIf="dataReceived">
     Por favor, completa los datos del vehículo y selecciona coberturas
   </p>
-</ng-template>
+</ng-template> -->

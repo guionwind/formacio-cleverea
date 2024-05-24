@@ -13,6 +13,7 @@
                 class="form-control"
                 placeholder="Nombre y apellidos"
                 [(ngModel)]="nombre"
+                (input)="onSend()"
               />
             </td>
           </tr>
@@ -23,6 +24,7 @@
               class="form-control"
               placeholder="Fecha de nacimiento"
               [(ngModel)]="fecha"
+              (input)="onSend()"
             />
           </tr>
           <tr>
@@ -32,6 +34,7 @@
               class="form-control"
               placeholder="Marca del vehículo"
               [(ngModel)]="marca"
+              (input)="onSend()"
             />
           </tr>
         </table>
