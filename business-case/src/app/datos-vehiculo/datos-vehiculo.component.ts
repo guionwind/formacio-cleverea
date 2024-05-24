@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
+import { Tomador } from '../common/models/tomador.model';
 
 
 @Component({
@@ -26,12 +27,16 @@ export class DatosVehiculoComponent {
   fecha: string
   marca: string
 
-  //inicialitzar valors buits; si no peta gestionPoliza.updateTomador en rebre valors undefined
   constructor(private gestionPoliza:GestionPolizaService) {
   }
 
+  //need help with passing from classes to interfaces
   onSend() {
-    this.gestionPoliza.updateTomador(this.nombre, this.fecha, this.marca)
+    const tomador = new Tomador()
+    tomador.nombreApellidos = this.nombre
+    tomador.fechaNacimiento = this.fecha
+    tomador.marcaVehiculo = this.marca
+    this.gestionPoliza.setTomador(tomador)
   }
 
 }

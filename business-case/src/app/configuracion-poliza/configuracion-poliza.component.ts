@@ -2,7 +2,6 @@ import { Component  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderinputComponent } from '../common/components/sliderinput/sliderinput.component';
 import { GestionPolizaService } from '../common/services/gestion-poliza.service';
-import { Cobertura } from '../common/enums/cobertura.enum';
 import { CommonModule } from '@angular/common';
 import { coberturaArray } from './configuracion-poliza.models';
 
@@ -20,7 +19,6 @@ import { coberturaArray } from './configuracion-poliza.models';
 
 export class ConfiguracionPolizaComponent {
 
-  coberturas: Cobertura = Cobertura.AsistenciaCarretera;
   valueArray = coberturaArray;
 
   constructor(private gestionPoliza: GestionPolizaService) {
@@ -28,6 +26,6 @@ export class ConfiguracionPolizaComponent {
 
   onUpdate(event: {activate:boolean, id:string}) {
     this.gestionPoliza.updateCobertura(event)
-    this.gestionPoliza.priceObservable.next(this.gestionPoliza.calculatePrice());
+    this.gestionPoliza.priceSubject.next(this.gestionPoliza.calculatePrice());
   }
 }

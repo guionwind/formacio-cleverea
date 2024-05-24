@@ -22,9 +22,10 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class SummaryComponent implements OnInit, OnDestroy{
-  precioFinal: number;
+  precioFinal: number = 0;
   poliza: Poliza;
   private priceObsSubscription: Subscription
+  private tomadorSubscription: Subscription
 
   constructor(private gestionPoliza: GestionPolizaService) {
     this.poliza = this.gestionPoliza.poliza
@@ -32,10 +33,14 @@ export class SummaryComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.priceObsSubscription = this.gestionPoliza.priceObservable.subscribe(data => {this.precioFinal = data})
+    this.priceObsSubscription = this.gestionPoliza.priceSubject.subscribe(data => {this.precioFinal = data})
+    this.tomadorSubscription = this.gestionPoliza.tomadorSubject.subscribe(data => {this.poliza.tomador = data})
+
   }
+
 
   ngOnDestroy() {
     this.priceObsSubscription.unsubscribe()
+    this.tomadorSubscription.unsubscribe()
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Poliza } from '../models/poliza.model';
 import { Cobertura } from '../enums/cobertura.enum';
 import { Subject } from 'rxjs';
+import { Tomador } from '../models/tomador.model';
 
 
 @Injectable({
@@ -13,7 +14,9 @@ export class GestionPolizaService {
 
   precioFinal: number = 0;
 
-  priceObservable = new Subject<number>()
+  priceSubject: Subject<number> = new Subject()
+
+  tomadorSubject: Subject<Tomador> = new Subject()
 
   constructor() {
   }
@@ -60,4 +63,13 @@ export class GestionPolizaService {
   emptyString(str: string) {
     return (str.length === 0)
   }
+
+  setTomador(tomador: Tomador) {
+    this.tomadorSubject.next(tomador)
+  }
+
+  getTomador(): Subject<Tomador> {
+    return this.tomadorSubject
+  }
+
 }
