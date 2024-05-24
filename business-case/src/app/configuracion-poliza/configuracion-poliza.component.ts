@@ -19,13 +19,12 @@ import { coberturaArray } from './configuracion-poliza.models';
 
 export class ConfiguracionPolizaComponent {
 
-  valueArray = coberturaArray;
+  coberturasExistentes = coberturaArray;
 
   constructor(private gestionPoliza: GestionPolizaService) {
   }
 
   onUpdate(event: {activate:boolean, id:string}) {
     this.gestionPoliza.updateCobertura(event)
-    this.gestionPoliza.updatePrice();
   }
 }

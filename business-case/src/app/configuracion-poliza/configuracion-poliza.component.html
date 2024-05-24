@@ -2,7 +2,7 @@
   <div>
     <h2>Coberturas</h2>
   </div>
-  <div *ngFor="let cobertura of valueArray">
+  <div *ngFor="let cobertura of coberturasExistentes">
     <app-sliderinput [config]="cobertura" (sendUpdate)="onUpdate($event)">
     </app-sliderinput>
   </div>

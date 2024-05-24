@@ -11,12 +11,11 @@ import { Tomador } from '../models/tomador.model';
 })
 export class GestionPolizaService {
 
-
-  //set as private, use getters/setters
+  // final price
   private priceTotalSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0)
   public priceTotal$: Observable<number> = this.priceTotalSubject.asObservable()
 
-  private polizaSubject: BehaviorSubject<Poliza> = new BehaviorSubject<Poliza>(new Poliza)
+  private polizaSubject: BehaviorSubject<Poliza> = new BehaviorSubject<Poliza>(new Poliza())
   public poliza$: Observable<Poliza> = this.polizaSubject.asObservable()
 
   private tomadorSubject: BehaviorSubject<Tomador> = new BehaviorSubject<Tomador>(new Tomador)
@@ -26,6 +25,8 @@ export class GestionPolizaService {
   constructor(private calculadora: CalculoPrecioPolizaService) {
   }
 
+  //la implementacio crea una copia de la poliza actual, la actualitza i despres fa setPoliza
+  //manera de nomes actualitzar un atribut per no haver de copiar?
   updateCobertura(event: {activate:boolean, id:string}) {
     const poliza = this.polizaSubject.getValue()
     switch(event.id){
@@ -45,12 +46,12 @@ export class GestionPolizaService {
         console.log("Not covered enum type! Check poliza.model or cobertura.enum")
     }
     this.setPoliza(poliza)
+    this.updatePrice()
   }
 
   calculatePrice() {
     return this.calculadora.calculatePrice(this.polizaSubject.getValue())
   }
-
 
   updatePrice() {
     this.priceTotalSubject.next(this.calculatePrice())
