@@ -4,45 +4,39 @@
       <h2>Datos del vehículo</h2>
       <hr class="horizontal-line" />
       <div>
-        <table style="margin-bottom: 10px">
-          <tr>
-            <td>Nombre y apellidos:</td>
-            <td>
+        <form [formGroup] = "datosForm" (keydown.enter)="onSubmit()" (ngSubmit)="onSubmit()">
+          <table style="margin-bottom: 10px">
+            <tr>
+              <td>Nombre y apellidos:</td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Nombre y apellidos"
+                  formControlName="nombre"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Fecha de nacimiento:</td>
               <input
                 type="text"
-                class="form-control"
-                placeholder="Nombre y apellidos"
-                [(ngModel)]="nombre"
-                (input)="onSend()"
+                placeholder="Fecha de nacimiento"
+                formControlName="fecha"
+              />  
+            </tr>
+            <tr>
+              <td>Marca del vehículo:</td>
+              <input
+                type="text"
+                placeholder="Marca del vehículo"
+                formControlName="marca"
               />
-            </td>
-          </tr>
-          <tr>
-            <td>Fecha de nacimiento:</td>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Fecha de nacimiento"
-              [(ngModel)]="fecha"
-              (input)="onSend()"
-            />
-          </tr>
-          <tr>
-            <td>Marca del vehículo:</td>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Marca del vehículo"
-              [(ngModel)]="marca"
-              (input)="onSend()"
-            />
-          </tr>
-        </table>
+            </tr>
+          </table>
+        </form>
       </div>
       <hr class="horizontal-line" />
     </div>
     <div style="margin-top: 10px"></div>
-
-    <!-- <button type="submit" (click)="onSend()">Siguiente paso</button> -->
   </div>
 </div>

@@ -1,5 +1,5 @@
-export class Tomador {
-    nombreApellidos: string = ""
-    fechaNacimiento: string = ""
-    marcaVehiculo: string = ""
+export interface Tomador {
+    nombreApellidos: string 
+    fechaNacimiento: string
+    marcaVehiculo: string
 }

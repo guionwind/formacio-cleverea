@@ -4,6 +4,8 @@ import { Poliza } from '../models/poliza.model';
 import { Cobertura } from '../enums/cobertura.enum';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Tomador } from '../models/tomador.model';
+import { tomadorConfig, polizaConfig } from './gestion-poliza.models';
+import { Form } from '@angular/forms';
 
 
 @Injectable({
@@ -15,10 +17,10 @@ export class GestionPolizaService {
   private priceTotalSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0)
   public priceTotal$: Observable<number> = this.priceTotalSubject.asObservable()
 
-  private polizaSubject: BehaviorSubject<Poliza> = new BehaviorSubject<Poliza>(new Poliza())
+  private polizaSubject: BehaviorSubject<Poliza> = new BehaviorSubject<Poliza>(polizaConfig)
   public poliza$: Observable<Poliza> = this.polizaSubject.asObservable()
 
-  private tomadorSubject: BehaviorSubject<Tomador> = new BehaviorSubject<Tomador>(new Tomador)
+  private tomadorSubject: BehaviorSubject<Tomador> = new BehaviorSubject<Tomador>(tomadorConfig)
   public tomador$: Observable<Tomador> = this.tomadorSubject.asObservable()
 
 

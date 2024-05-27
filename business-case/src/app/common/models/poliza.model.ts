@@ -1,6 +1,6 @@
-export class Poliza {
-    asistenciaCarretera: boolean = false
-    responsabilidadCivil: boolean = false
-    vehiculoSustitucion: boolean = false
-    colisionAnimales: boolean = false
+export interface Poliza {
+    asistenciaCarretera: boolean
+    responsabilidadCivil: boolean
+    vehiculoSustitucion: boolean
+    colisionAnimales: boolean
 }
