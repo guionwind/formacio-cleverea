@@ -65,8 +65,6 @@ export class GestionPolizaService {
     this.tomadorSubject.next(tomador)
   }
 
-  
-
   /* emptyData() {
     const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)
     
@@ -79,7 +77,5 @@ export class GestionPolizaService {
   emptyString(str: string) {
     return (str.length === 0)
   } */
-
-  
 
 }

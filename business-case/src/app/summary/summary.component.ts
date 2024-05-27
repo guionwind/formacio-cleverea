@@ -24,12 +24,11 @@ import { Tomador } from '../common/models/tomador.model';
 })
 export class SummaryComponent {
   //dinamic vs imperatiu
-  precioFinal$: Observable<number> = this.gestionPoliza.getPriceTotal();
-  poliza$: Observable<Poliza> = this.gestionPoliza.getPoliza();
-  tomador$: Observable<Tomador> = this.gestionPoliza.getTomador();
+  precioFinal$: Observable<number> = this.gestionPoliza.priceTotal$;
+  poliza$: Observable<Poliza> = this.gestionPoliza.poliza$;
+  tomador$: Observable<Tomador> = this.gestionPoliza.tomador$;
 
   constructor(private gestionPoliza: GestionPolizaService) {
-    
   }
 
 }
