@@ -166,7 +166,7 @@ To define the type of an array, use "type[]" (e.g. names: string[] = [])
 Reminder: use the browser devtools to debug error messages and use breakpoints. If bundled, check main.bundle.js file
 
 
-/** Section 9: Components & Databinding deep dive **/
+/** Section 5: Components & Databinding deep dive **/
 
 It is good to split the app into smaller components for reusability and maintainability
 Property & Event binding can be used on HTML elements, Directives and Components.
@@ -234,7 +234,7 @@ Exercici:
 		- despres carregar sliders cobertures+summary carregant a temps real, boto pedir seguro fora
 
 ----
-** Section 11: Directives Deep Dive **
+** Section 7: Directives Deep Dive **
 
 Attribute vs. Structural directives 
 	- Difference: Structural directives can change the structure of the DOM / View container; attribute only affect properties
@@ -329,7 +329,7 @@ New structural directive: ngSwitch
 
 
 
-** Section 13: Using Services & Dependency Injection **
+** Section 9: Using Services & Dependency Injection **
 
 
 Services allow us to outsource code. They are particularly useful for data processing and for communication between unrelated components.
@@ -375,7 +375,7 @@ Best way of injecting a service, if it is application-wide:
 
 
 
-** Section 15: Changing pages with routing **
+** Section 11: Changing pages with routing **
 
 Routing allows an Angular Single Page Application to change major parts of the DOM in order to make it seem that a new page has been loaded.
 This is accomplished by changing the URL to load different HTML templates.
@@ -486,114 +486,155 @@ In order to apply the guard only to the children, use the canActivateChild guard
 
 
 
-**Section 17: Observables
+------
 
-!!!! Install RxJS
-npm install --save rxjs@6
-npm install --save rxjs-compat
+** Section 19: Handling Forms in Angular Apps **
 
+Since we are building a Single Page Application, we cannot send forms via submit because it reloads the page.
+Therefore we will be using Angular to process the form inside the application. In case you need to send data to a server, we'll use the built-in HTTPRequest class
 
-Observable pattern
-    The observable emits events to the observer through a timeline
-    It allows us to handle asynchronous tasks without needing to block our program.
-    Can be connected to various data sources: user input events, http requests, triggered by code, etc.
-    Three types of data packages:
-        - Data
-        - Error message
-        - Observable completion
-    We will write the code to handle these cases
+Advantages of using forms
+	- Error handling
+	- Retrieving an entire JSON object instead of handling several variables
 
-Observables are a different approach to existing mechanisms such as callbacks and promises.
-
-
-! Observables are constructs to which we subscribe to be informed about changes in data
-
-
-HOW TO USE AN OBSERVABLE
-    Make sure to have RxJS installed
-
-    Example:
-        private exampleSubscription: Subscription
-
-        ngOnInit() {
-            this.exampleSubscription = observable.subscribe( whatever function )
-        }
-
-
-Observables don't stop emitting events automatically. To stop them and prevent memory leaks, unsubscribe from observables we are no longer interested in.
-        ngOnDestroy() {
-            this.exampleSubscription.unsubscribe();
-        }
-Unsubscribing kills an observable
+Template-Driven (infer form objects from DOM) vs. Reactive approach (create form in TypeScript and sync with DOM)
 
 
 
-CREATING CUSTOM OBSERVABLES
-Inside ngOnInit
-    const customObservable = Observable.create( observer => {implement the data that the observer sends here});
-
-Some methods of observer:
-    - .next(data)       -> send new dat:
-    - .error(Error object)      -> send error message
-    - .complete()   -> send completion
-
-Then, subscribe to it: customObservable.subscribe( data => {whatever you want to do with the data, such as console.log(data)} )
-Do store the subscription so that you can unsubscribe later. See HOW TO USE AN OBSERVABLE.
+Template-Driven (only used in simple applications)
+- Import FormsModule
+- <form> has ngSubmit which triggers on form submission. <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+- Then, onSubmit(form: NgForm) {}
+- Data validation is handled inside the HTML components.
 
 
-
-ERRORS AND COMPLETION
-
-Errors: send an Error object through the observer using .error()
-    if (condition) observer.error(new Error("message"))
-This will send an error to console, and then the observable dies (no need to unsubscribe; you still can, it will just do nothing)
-
-Error handling:
-    subscribe() has three parameters, all functions. In order: the data handler, the error handler and the completion handler
-
-Observable completion happens by two ways:
-    1. An HTTP request is fulfilled after the server responds
-    2. Through code
-
-!! An error cancels the observable, but does not complete it
+!!! Reactive approach
 
 
-In real scenarios, we will typically use existing observables built into libraries
+Initialize a form:
+	Import ReactiveFormsModule
+
+	Forms are of class FormGroup
+	Initialize the form before the template is rendered. Use ngOnInit
+	The FormGroup constructor receives as an argument a single JSON Object with the form fields.
+	Each form field is of type FormControl
+		FormControl optional arguments: initial state, [validators array], [async validators array]
+
+	Example:
+		this.exampleForm = new FormGroup({ 'username': new FormControl(null), 'email': new FormControl(null), 'favoriteColor': new FormControl(green) })
+
+Adding validation
+	Inside a FormControl, pass validators as arguments.
+	Angular has built-in validators, which you can call using Validators._____
+	These are static methods of class Validators; do not execute the function with the parentheses, just pass the tag.
+	Example:
+		'email': new FormControl(null, [Validators.required, Validators.email])
+
+	You can check if a form field's current content is valid or not, by using the navigator debug console.
+	
+
+
+Synchronize HTML and form
+	- Wire up the form group and each form control to a <form> tag
+	<form [formGroup]="exampleForm">
+
+	- Then, inside each input:
+	<input formControlName="exampleFormField">
+
+	You can also use formControlName with Data binding, in which case you'd have [formControlName] = "'exampleFormField'"
+
+
+Submit the form
+	Inside the <form> tag:
+	(ngSubmit)="onSubmit()"
+
+	Then, inside onSubmit() we already have access to the form group, so we don't need to pass it as an argument.
+
+
+Access form controls from the HTML
+	exampleForm.get('path-to-parameter')._______
+	Some form control methods are: .valid, .touched
+	
+	Form Control fields can be applied to both the form group and the form controls.
+
+
+Form controls can be nested inside more FormGroup, similarly to what we did with nested routes.
+	Hook up to HTML using formGroupName inside the corresponding element
+
+
+Arrays of Form Controls (FormArray)
+	hobbies: new FormArray([])
+
+	onAddHobby() {
+		const newHobby = new FormControl(null, Validators.required)
+		(this.exampleForm.get('hobbies') as FormArray).push(newHobby)		//uses type casting 
+	}
+	
+	Hook up to HTML using formArrayName inside the corresponding element
+	this.signupForm.get('hobbies').controls will return an array of each FormControl inside the FormArray hobbies.
+
+
+Custom validators
+	A validator is ultimately just a function. Therefore, you can implement it as such inside the component.
+	See below:
+	
+	forbiddenNames(control: FormControl): {[s: string]: boolean} {
+		if (this.forbiddenUsernames.indexOf(control.value) !== -1) return {'nameIsForbidden': true}
+		return null;
+	}
+	
+	Important: you must return null if the validator passes!!
+	
+	This takes a FormControl value and returns a {key: true/false} pair.
+	This function will check if the array forbiddenUsernames contains the value of the FormControl; as in, if the FormControl is one of the forbiddel usernames.
+	
+	To use the validator: since we are not calling it within our code, we must bind it. It would look like this:
+	'username': new FormControl(null, [Validators.required, this.forbiddennNames.bind(this)] )
+
+	Possible values: ng-valid, ng-invalid
 
 
 
-OPERATORS
-
-Middle point between the observable and the subscription that can operate on the data to be sent.
-Import any operator you want to use from rxjs/operators. For example: map, filter 
-    observable.pipe(operator)
-
-    example: observable.pipe(map( (data: number) => {return 'He menjat ' + (data+1) + ' pomes'} ));
-
-Then, subscribe to the observable with the pipe.
-    observable.pipe(...).subscribe(...)
-
-To use several operators within a pipe, call them as arguments of the pipe in order
+Error handling
+	The errors sent from the validators are stored inside the "errors" object in our form.
+	exampleForm.get('property').errors['errorName']
 
 
+Custom async validator
 
-SUBJECTS
+	Similar to custom validators, but they return a Promise<any> | Observable<any>.
+	
+	forbiddenEmails(control: formControl): Promise<any> | Observable<any> {
+		const promise = new Promise<any>( (resolve, reject) => { 
+			implementation. resolve({'emailIsForbidden':true}) or maybe resolve(null)
+		} )
+		return promise;
+	}
 
-Instead of using an EventEmitter in the service, create a new Subject<type>() to send the data
-    emitter = new Subject<type>()
-Then, call .next(value), as subjects are a type of observable.
+	Then pass the reference to the FormControl element and .bind(this)
 
-The key difference between normal observables and subjects is that subjects can get actively triggered using next().
-
-On the one hand, subjects are more efficient than EventEmitters for cross-component communication (e.g. using services) and allow us to use operators.
-On the other, if you are using @Output for child-parent communication, use EventEmitters.
-
-Remember to unsubscribe from subjects when they are no longer necessary!
+	Async validators have 3 states: ng-valid, ng-invalid and ng-pending
 
 
+Reacting to status/value changes
+	Subscribe to the corresponding observable:
+		this.exampleForm.valueChanges.subscribe( (value) => myVar )
+		this.exampleForm.statusChanges.subscribe( (status) => myVar )
 
-**dinamic vs. imperatiu
 
-private disabledButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-public disabledButton$: Observable<boolean> = this.disabledButtonSubject.asObservable();
+Set/patch form values
+	To set form values programatically:
+
+		this.exampleForm.setValue({corresponding json object})
+
+	Use .patchValue() instead if you only want to set some of the form parameters.
+
+	.reset() sets all parameters to blank. You can also pass an objecto to reset to specific values.
+
+
+
+
+
+
+
 

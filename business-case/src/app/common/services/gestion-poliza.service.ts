@@ -57,20 +57,8 @@ export class GestionPolizaService {
     this.priceTotalSubject.next(this.calculatePrice())
   }
 
-  getPriceTotal() {
-    return this.priceTotal$
-  }
-
-  getPoliza() {
-    return this.poliza$
-  }
-
   setPoliza(poliza: Poliza) {
     this.polizaSubject.next(poliza)
-  }
-
-  getTomador() {
-    return this.tomador$
   }
 
   setTomador(tomador: Tomador) {
