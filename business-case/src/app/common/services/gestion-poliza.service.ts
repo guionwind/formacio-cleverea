@@ -5,7 +5,6 @@ import { Cobertura } from '../enums/cobertura.enum';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Tomador } from '../models/tomador.model';
 import { tomadorConfig, polizaConfig } from './gestion-poliza.models';
-import { Form } from '@angular/forms';
 
 
 @Injectable({

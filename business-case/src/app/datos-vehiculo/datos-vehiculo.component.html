@@ -4,7 +4,10 @@
       <h2>Datos del vehículo</h2>
       <hr class="horizontal-line" />
       <div>
-        <form [formGroup] = "datosForm" (keydown.enter)="onSubmit()" (ngSubmit)="onSubmit()">
+        <!-- if using ngSubmit, requires an invisible submit button here -->
+        <!-- otherwise, use (keydown.enter)="onSubmit()" -->
+        <form [formGroup] = "datosForm" (ngSubmit)="onSubmit()">
+          <button type="submit" style="display: none;"></button>
           <table style="margin-bottom: 10px">
             <tr>
               <td>Nombre y apellidos:</td>
@@ -13,6 +16,7 @@
                   type="text"
                   placeholder="Nombre y apellidos"
                   formControlName="nombre"
+                  [ngClass]="{green: datosForm.get('nombre').valid}"
                 />
               </td>
             </tr>
@@ -22,6 +26,7 @@
                 type="text"
                 placeholder="Fecha de nacimiento"
                 formControlName="fecha"
+                [ngClass]="{green: datosForm.get('fecha').valid}"
               />  
             </tr>
             <tr>
@@ -30,12 +35,17 @@
                 type="text"
                 placeholder="Marca del vehículo"
                 formControlName="marca"
+                [ngClass]="{green: datosForm.get('marca').valid}"
               />
             </tr>
           </table>
+          
         </form>
       </div>
       <hr class="horizontal-line" />
+      <p *ngIf="datosForm.get('fecha').invalid && datosForm.get('fecha').errors['minlength']"> Fecha muy corta (formato: dd/mm/aaaa)</p>
+      <p *ngIf="datosForm.get('fecha').invalid && datosForm.get('fecha').errors['pattern']"> Caracteres invalidos en la fecha</p>
+      <p *ngIf="datosForm.get('marca').invalid && datosForm.get('marca').errors['minlength']"> Nombre muy corto</p>
     </div>
     <div style="margin-top: 10px"></div>
   </div>

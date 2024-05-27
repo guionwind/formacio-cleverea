@@ -547,6 +547,8 @@ Synchronize HTML and form
 Submit the form
 	Inside the <form> tag:
 	(ngSubmit)="onSubmit()"
+	
+	If you don't have a button, try (keydown.enter)="onSubmit()"
 
 	Then, inside onSubmit() we already have access to the form group, so we don't need to pass it as an argument.
 
@@ -586,7 +588,7 @@ Custom validators
 	Important: you must return null if the validator passes!!
 	
 	This takes a FormControl value and returns a {key: true/false} pair.
-	This function will check if the array forbiddenUsernames contains the value of the FormControl; as in, if the FormControl is one of the forbiddel usernames.
+	This function will check if the array forbiddenUsernames contains the value of the FormControl; as in, if the FormControl is one of the forbidden usernames.
 	
 	To use the validator: since we are not calling it within our code, we must bind it. It would look like this:
 	'username': new FormControl(null, [Validators.required, this.forbiddennNames.bind(this)] )
