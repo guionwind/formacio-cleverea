@@ -109,6 +109,7 @@ Directives are instructions in the DOM. with/without a template
     - ngIf -> <p *ngIf="serverCreated; else noServer"> Server was created, server name is {{ serverName }}</p>
         - template: <ng-template #name> content </ng-template> is a snippet that can be jumped to by its tag
         - New syntax in Angular 17: @if (condition) {<p>Visible text if true</p>}
+
     - ngFor -> *ngFor="let item of items" iterate through a list and create an element for each iteration
         - "let item of items, index as i" to use the number of iterations
 
@@ -632,6 +633,143 @@ Set/patch form values
 	Use .patchValue() instead if you only want to set some of the form parameters.
 
 	.reset() sets all parameters to blank. You can also pass an objecto to reset to specific values.
+
+
+---------
+
+**** Section 21: Using Pipes ****
+
+Useful for transforming data output, without modifying the original values.
+
+Example: {{ username | uppercase }} will output the string username in all upper case letters. This is a built-in pipe.
+
+You can also pass parameters to the pipe, to set the data format. Typically, in camel case. For instance, |date:'fullDate' will output the date as a human would write it.
+For more parameters, separate them with multiple colons. |date:'firstParameter':'secondParameter'
+Check the Angular documentation for a list of all default pipes.
+
+Chaining pipes is possible.
+
+!!! For observables, such as when using BehaviorSubject, the |async pipe is particularly useful.
+
+
+
+
+
+**** Section 22: Making HTTP Requests ****
+
+Typically, GET requests will be made inside ngOnInit(), then we will show the data.
+
+Inside the constuctor, inject the HTTP request service using
+	private http: HttpClient
+
+Angular makes use of observables for HTTP requests. All methods of HttpClient return an observable to which we subscribe and wait for the reply
+
+For example: this.http.post('URI', 'content').subscribe( responseData => (this.response = responseData))
+This will make a POST request and return the server response to this.response
+
+For debugging, check the "network" tab in the navigator debugger to check all requests.
+
+
+Much faster way of making a request:
+	request$ = createHttpObservable('URI')
+
+
+
+To add a variable value into a string: ${variable}
+	- Example: "/api/courses/${this.course.id}" 
+
+
+
+
+**** RxJs course: Section 2 - Essential Operators + Reactive design ****
+
+In order to chain RxJs operators, we will be using the pipe() function of an observable. This will derive a new observable to which we subscribe.
+
+You can both nest and chain RxJs operators freely.
+
+
+!! List of basic operators
+
+* map() Applies a function to all values emitted by an Observable, one by one.
+	- mappedOutput$ = example$.pipe(map( (response)=>("elements to take") ))
+	- multiply$ = numbersArray$.pipe(map(x => x*10))
+
+* filter( (object) => {boolean} ) will only keep the elements of object for which the boolean expression is true
+	- observable$.pipe(map(example => example.filter(example => example.category == 'SIMPLE')))
+
+* shareReplay() saves the replay of the stream and replicates it on all new subscribers. This is useful to share an HTTP response among several observers.
+
+* tap() produces side effects outside of the observable chain. For instance: tap( () => console.log("HTTP Request executed") )
+
+* debounceTime(milliseconds) only allows emitting up to once every however many milliseconds we specify.
+
+* distinctUntilChanged() only sends the data through the observable if the new value changed from the previous one. Useful to prevent shift-key presses sending values.
+
+
+
+!! Avoid adding logic to the subscribe() call. This is an imperative approach, and will lead to callback hell in complex applications.
+
+Use Observables instead of arrays and objects. Remember using the |async pipe when displaying the data in the component
+
+
+
+Defining a very simple observable: of(1,2,3) will create an observable that emits the values 1, 2 and 3, and then completes.
+
+
+
+** Higher-order Mapping Operators
+
+
+Observable concatenation
+	- Sequential concatenation. The concatenated observable emits the stream for each observable *until completion*, one after the other.
+	- concat(observer1$, observer2$, ...) concatenates all observers passed as as arguments, and generates a new observable.
+
+* concatMap(function) is useful for autosaving, for example.
+
+
+
+Merging observables
+	- Parallel asynchronous operations. Returns all values emitted by any merged observable and only completes when all merged observables are complete.
+	- merge(obs1$, obs2$, ...)
+
+* mergeMap(function) allow us to parallelize backend calls. It only completes if the source is completed
+Order doesn't matter
+
+
+
+
+* exhaustMap() limits the amount of observables we process. If the current observable is not completed, ignore incoming observables and don't process them.
+
+
+This is usually applied to interface components. We will implement observables that affect a ViewChild inside the ngViewAfterInit hook.
+For example, in a button:
+
+ngAfterViewInit() {
+	fromEvent(this.saveButton.nativeElement, 'click').pipe(
+		exhaustMap( () => this.operation(this.form.value) )
+	)
+}
+
+
+* switchMap() switches from one observable to another, depending on the most recent value received.
+It straight up abandons the previous observable if it's overwritten.
+Useful for search typeahead in a search bar:
+
+ngAfterViewInit() {
+	fromEvent(this.saveButton.nativeElement, 'click').pipe(
+		map(event => event.target.value),
+		switchMap( search => this.loadInformation(search) )
+	)
+}
+
+
+How to choose one or the other?
+We can simply choose the appropriate operator based on the use case:
+
+* to do things in sequence while waiting for completion				=> concatMap
+* doing things in parallel (processing several backend calls)			=> mergeMap
+* for ignoring new Observables while the current one is still ongoing 	=> exhaustMap
+* in case we need cancellation logic 							=> switchMap
 
 
 
