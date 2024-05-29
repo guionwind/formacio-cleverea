@@ -490,6 +490,118 @@ In order to apply the guard only to the children, use the canActivateChild guard
 
 
 
+------
+
+**Section 17: Observables
+
+!!!! Install RxJS
+npm install --save rxjs@6
+npm install --save rxjs-compat
+
+
+Observable pattern
+    The observable emits events to the observer through a timeline
+    It allows us to handle asynchronous tasks without needing to block our program.
+    Can be connected to various data sources: user input events, http requests, triggered by code, etc.
+    Three types of data packages:
+        - Data
+        - Error message
+        - Observable completion
+    We will write the code to handle these cases
+
+Observables are a different approach to existing mechanisms such as callbacks and promises.
+
+
+! Observables are constructs to which we subscribe to be informed about changes in data
+
+
+HOW TO USE AN OBSERVABLE
+    Make sure to have RxJS installed
+
+    Example:
+        private exampleSubscription: Subscription
+
+        ngOnInit() {
+            this.exampleSubscription = observable.subscribe( whatever function )
+        }
+
+
+Observables don't stop emitting events automatically. To stop them and prevent memory leaks, unsubscribe from observables we are no longer interested in.
+        ngOnDestroy() {
+            this.exampleSubscription.unsubscribe();
+        }
+Unsubscribing kills an observable
+
+
+
+CREATING CUSTOM OBSERVABLES
+Inside ngOnInit
+    const customObservable = Observable.create( observer => {implement the data that the observer sends here});
+
+Some methods of observer:
+    - .next(data)       -> send new dat:
+    - .error(Error object)      -> send error message
+    - .complete()   -> send completion
+
+Then, subscribe to it: customObservable.subscribe( data => {whatever you want to do with the data, such as console.log(data)} )
+Do store the subscription so that you can unsubscribe later. See HOW TO USE AN OBSERVABLE.
+
+
+
+ERRORS AND COMPLETION
+
+Errors: send an Error object through the observer using .error()
+    if (condition) observer.error(new Error("message"))
+This will send an error to console, and then the observable dies (no need to unsubscribe; you still can, it will just do nothing)
+
+Error handling:
+    subscribe() has three parameters, all functions. In order: the data handler, the error handler and the completion handler
+
+Observable completion happens by two ways:
+    1. An HTTP request is fulfilled after the server responds
+    2. Through code
+
+!! An error cancels the observable, but does not complete it
+
+
+In real scenarios, we will typically use existing observables built into libraries
+
+
+
+OPERATORS
+
+Middle point between the observable and the subscription that can operate on the data to be sent.
+Import any operator you want to use from rxjs/operators. For example: map, filter 
+    observable.pipe(operator)
+
+    example: observable.pipe(map( (data: number) => {return 'He menjat ' + (data+1) + ' pomes'} ));
+
+Then, subscribe to the observable with the pipe.
+    observable.pipe(...).subscribe(...)
+
+To use several operators within a pipe, call them as arguments of the pipe in order
+
+
+
+SUBJECTS
+
+Instead of using an EventEmitter in the service, create a new Subject<type>() to send the data
+    emitter = new Subject<type>()
+Then, call .next(value), as subjects are a type of observable.
+
+The key difference between normal observables and subjects is that subjects can get actively triggered using next().
+
+On the one hand, subjects are more efficient than EventEmitters for cross-component communication (e.g. using services) and allow us to use operators.
+On the other, if you are using @Output for child-parent communication, use EventEmitters.
+
+Remember to unsubscribe from subjects when they are no longer necessary!
+
+
+
+**dinamic vs. imperatiu
+
+private disabledButtonSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+public disabledButton$: Observable<boolean> = this.disabledButtonSubject.asObservable();
 
 ------
 
