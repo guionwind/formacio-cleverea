@@ -1,5 +1,7 @@
 <div style="display: inline-flex">
-  <p>{{ description }}</p>
+  <!--   <p [ngClass]="{'activated': bool}">{{ description }}</p>
+-->
+  <p [ngClass]="{ activated: bool }">{{ config.description }}</p>
   <div style="margin-right: 10px"></div>
   <label class="toggle-switch">
     <input type="checkbox" [(ngModel)]="bool" (change)="onSwitch()" />

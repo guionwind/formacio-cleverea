@@ -1,24 +1,29 @@
 <div>
-  <h1 style="color: rgb(23, 182, 57); margin-left: 15px">Cleverea</h1>
+  <h1 style="color: green; margin-left: 15px">Cleverea</h1>
 </div>
 
 <hr class="horizontal-line" />
 
-<div style="position: relative; top: 20px">
+<div style="position: relative; top: 30px">
   <div style="position: absolute; left: 20px">
-    <app-datos-vehiculo (sendData)="onReceiveData($event)"></app-datos-vehiculo>
+    <app-datos-vehiculo></app-datos-vehiculo>
   </div>
-  <div style="position: absolute; right: 20px">
-    <app-summary
-      *ngIf="showSummary; else missingData"
-      [poliza]="poliza"
-      class="flexbox"
-    ></app-summary>
+  <div style="position: absolute; right: 20px; display: inline">
+    <router-outlet></router-outlet>
   </div>
 </div>
+<div style="display: inline">
+  <a
+    routerLink="/summary"
+    routerLinkActive="button-main-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="button-main"
+    >Siguiente paso
+  </a>
+</div>
 
-<ng-template #missingData>
+<!-- <ng-template #missingData>
   <p *ngIf="dataReceived">
     Por favor, completa los datos del vehículo y selecciona coberturas
   </p>
-</ng-template>
+</ng-template> -->

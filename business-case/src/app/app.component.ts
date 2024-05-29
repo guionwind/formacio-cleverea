@@ -1,24 +1,28 @@
-import { Poliza } from './common/models/poliza.model';
 import { DatosVehiculoComponent } from './datos-vehiculo/datos-vehiculo.component';
 
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SummaryComponent } from './summary/summary.component';
+import { GestionPolizaService } from './common/services/gestion-poliza.service';
+import { ConfiguracionPolizaComponent } from "./configuracion-poliza/configuracion-poliza.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    DatosVehiculoComponent,
-    CommonModule,
-    SummaryComponent,],
-  templateUrl: './app.component.html',
-  styleUrls: [
-    './app.component.css',
-    './common/styles/styles-common.css'
-  ]
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrls: [
+        './app.component.css',
+        './common/styles/styles-common.css'
+    ],
+    imports: [
+        RouterOutlet,
+        RouterModule,
+        DatosVehiculoComponent,
+        CommonModule,
+        SummaryComponent,
+        ConfiguracionPolizaComponent,
+    ]
 })
 export class AppComponent {
   title = 'business-case';
@@ -26,34 +30,9 @@ export class AppComponent {
   showSummary: boolean = false
 
   dataReceived: boolean = false
-  
-  poliza: Poliza
 
-  constructor() {
-    this.poliza = new Poliza()
-  }
-
-  onReceiveData(poliza: Poliza) {
-    this.poliza = poliza
-    this.dataReceived = true
-
-    if (!this.emptyData()) {
-      this.showSummary = true
-    }
-  }
-
-
-
-  emptyData() {
-    const filledIn = !this.emptyString(this.poliza.tomador.nombreApellidos) && !this.emptyString(this.poliza.tomador.fechaNacimiento) && !this.emptyString(this.poliza.tomador.marcaVehiculo)
+  constructor(private gestionPoliza: GestionPolizaService) {
     
-    const hayCoberturas = this.poliza.asistenciaCarretera || this.poliza.responsabilidadCivil || this.poliza.vehiculoSustitucion || this.poliza.colisionAnimales
-
-    const result = filledIn && hayCoberturas
-    return !result;
   }
 
-  emptyString(str: string) {
-    return (str.length === 0)
-  }
 }

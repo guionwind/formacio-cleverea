@@ -1,57 +1,34 @@
 import { Poliza } from '../common/models/poliza.model';
 
 import { CommonModule } from '@angular/common';
-import { Component , DoCheck, Input} from '@angular/core';
+import { Component } from '@angular/core';
+import { GestionPolizaService } from '../common/services/gestion-poliza.service';
+import { RouterOutlet } from '@angular/router';
+import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
+import { Observable } from 'rxjs-compat';
+import { Tomador } from '../common/models/tomador.model';
 
 @Component({
   selector: 'app-summary',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    ConfiguracionPolizaComponent
+  ],
   templateUrl: './summary.component.html',
   styleUrls: [
     './summary.component.css',
     '../common/styles/styles-common.css'
   ]
 })
-export class SummaryComponent implements DoCheck {
-  @Input() poliza: Poliza;
+export class SummaryComponent {
+  //dinamic vs imperatiu
+  precioFinal$: Observable<number> = this.gestionPoliza.priceTotal$;
+  poliza$: Observable<Poliza> = this.gestionPoliza.poliza$;
+  tomador$: Observable<Tomador> = this.gestionPoliza.tomador$;
 
-  nombreApellidos: string;
-  fechaNacimiento: string;
-  marcaVehiculo: string;
-
-  asistenciaCarretera: boolean = false;
-  responsabilidadCivil: boolean = false;
-  vehiculoSustitucion: boolean = false;
-  colisionAnimales: boolean = false;
-
-
-  constructor() {
-    this.poliza = new Poliza()
-    this.nombreApellidos = "not-init"
-    this.fechaNacimiento = "not-init"
-    this.marcaVehiculo = "not-init"
+  constructor(private gestionPoliza: GestionPolizaService) {
   }
 
-  ngDoCheck() {
-    this.nombreApellidos = this.poliza.tomador.nombreApellidos
-    this.fechaNacimiento = this.poliza.tomador.fechaNacimiento
-    this.marcaVehiculo = this.poliza.tomador.marcaVehiculo
-  }
-
-  calculatePrice() {
-    return Number(this.poliza.asistenciaCarretera) * 5 + Number(this.poliza.responsabilidadCivil) * 3 + Number(this.poliza.vehiculoSustitucion) * 3 + Number(this.poliza.colisionAnimales) * 2;
-  }
-
-  getNombreApellidos() {
-    return this.poliza.tomador.nombreApellidos
-  }
-
-  getFechaNacimiento() {
-    return this.poliza.tomador.fechaNacimiento
-  }
-  
-  getMarcaVehiculo() {
-    return this.poliza.tomador.marcaVehiculo
-  }
 }

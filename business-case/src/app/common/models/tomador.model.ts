@@ -1,7 +1,5 @@
-export class Tomador {
-    constructor(
-        public nombreApellidos: string = "",
-        public fechaNacimiento: string = "",
-        public marcaVehiculo: string = "",
-    ) {}
+export interface Tomador {
+    nombreApellidos: string 
+    fechaNacimiento: string
+    marcaVehiculo: string
 }

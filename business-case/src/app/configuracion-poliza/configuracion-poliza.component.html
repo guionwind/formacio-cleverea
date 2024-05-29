@@ -1,66 +1,9 @@
-<!-- <div style="display: inline-flex">
-  <p>Asistencia en carretera</p>
-  <div style="margin-right: 10px"></div>
-  <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="asistencia" (change)="onSwitch()" />
-    <div class="slider"></div>
-  </label>
-</div>
-<div></div>
-<div style="display: inline-flex">
-  <p>Responsabilidad civil</p>
-  <div style="margin-right: 10px"></div>
-  <label class="toggle-switch">
-    <input
-      type="checkbox"
-      [(ngModel)]="responsabilidad"
-      (change)="onSwitch()"
-    />
-    <div class="slider"></div>
-  </label>
-</div>
-<div></div>
-<div style="display: inline-flex">
-  <p>Vehículo de sustitución</p>
-  <div style="margin-right: 10px"></div>
-  <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="vehiculo" (change)="onSwitch()" />
-    <div class="slider"></div>
-  </label>
-</div>
-<div></div>
-<div style="display: inline-flex">
-  <p>Colisión con animales</p>
-  <div style="margin-right: 10px"></div>
-  <label class="toggle-switch">
-    <input type="checkbox" [(ngModel)]="colision" (change)="onSwitch()" />
-    <div class="slider"></div>
-  </label>
-</div> -->
-
 <div>
   <div>
-    <app-sliderinput
-      [description]="'Asistencia en carretera'"
-      (sendUpdate)="onAsistencia($event)"
-    ></app-sliderinput>
+    <h2>Coberturas</h2>
   </div>
-  <div>
-    <app-sliderinput
-      [description]="'Responsabilidad civil'"
-      (sendUpdate)="onResponsabilidad($event)"
-    ></app-sliderinput>
-  </div>
-  <div>
-    <app-sliderinput
-      [description]="'Vehículo de sustitución'"
-      (sendUpdate)="onVehiculo($event)"
-    ></app-sliderinput>
-  </div>
-  <div>
-    <app-sliderinput
-      [description]="'Colisión con animales'"
-      (sendUpdate)="onColision($event)"
-    ></app-sliderinput>
+  <div *ngFor="let cobertura of coberturasExistentes">
+    <app-sliderinput [config]="cobertura" (sendUpdate)="onUpdate($event)">
+    </app-sliderinput>
   </div>
 </div>

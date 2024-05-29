@@ -4,54 +4,49 @@
       <h2>Datos del vehículo</h2>
       <hr class="horizontal-line" />
       <div>
-        <table style="margin-bottom: 10px">
-          <tr>
-            <td>Nombre y apellidos:</td>
-            <td>
+        <!-- if using ngSubmit, requires an invisible submit button here -->
+        <!-- otherwise, use (keydown.enter)="onSubmit()" -->
+        <form [formGroup] = "datosForm" (ngSubmit)="onSubmit()">
+          <button type="submit" style="display: none;"></button>
+          <table style="margin-bottom: 10px">
+            <tr>
+              <td>Nombre y apellidos:</td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Nombre y apellidos"
+                  formControlName="nombre"
+                  [ngClass]="{green: datosForm.get('nombre').valid}"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Fecha de nacimiento:</td>
               <input
                 type="text"
-                class="form-control"
-                placeholder="Nombre y apellidos"
-                [(ngModel)]="nombre"
+                placeholder="Fecha de nacimiento"
+                formControlName="fecha"
+                [ngClass]="{green: datosForm.get('fecha').valid}"
+              />  
+            </tr>
+            <tr>
+              <td>Marca del vehículo:</td>
+              <input
+                type="text"
+                placeholder="Marca del vehículo"
+                formControlName="marca"
+                [ngClass]="{green: datosForm.get('marca').valid}"
               />
-            </td>
-          </tr>
-          <tr>
-            <td>Fecha de nacimiento:</td>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Fecha de nacimiento"
-              [(ngModel)]="fecha"
-            />
-          </tr>
-          <tr>
-            <td>Marca del vehículo:</td>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Marca del vehículo"
-              [(ngModel)]="marca"
-            />
-          </tr>
-        </table>
+            </tr>
+          </table>
+          
+        </form>
       </div>
       <hr class="horizontal-line" />
-      <div>
-        <h2>Coberturas</h2>
-        <app-configuracion-poliza
-          (sendAsistencia)="onAsistencia($event)"
-          (sendResponsabilidad)="onResponsabilidad($event)"
-          (sendVehiculo)="onVehiculo($event)"
-          (sendColision)="onColision($event)"
-        >
-        </app-configuracion-poliza>
-      </div>
+      <p *ngIf="datosForm.get('fecha').invalid && datosForm.get('fecha').errors['minlength']"> Fecha muy corta (formato: dd/mm/aaaa)</p>
+      <p *ngIf="datosForm.get('fecha').invalid && datosForm.get('fecha').errors['pattern']"> Caracteres invalidos en la fecha</p>
+      <p *ngIf="datosForm.get('marca').invalid && datosForm.get('marca').errors['minlength']"> Nombre muy corto</p>
     </div>
     <div style="margin-top: 10px"></div>
-
-    <div>
-      <button type="submit" (click)="onSend()">Pedir seguro</button>
-    </div>
   </div>
 </div>

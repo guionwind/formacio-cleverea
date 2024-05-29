@@ -1,12 +1,16 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderinputComponent } from '../common/components/sliderinput/sliderinput.component';
+import { GestionPolizaService } from '../common/services/gestion-poliza.service';
+import { CommonModule } from '@angular/common';
+import { coberturaArray } from './configuracion-poliza.models';
 
 @Component({
   selector: 'app-configuracion-poliza',
   standalone: true,
   imports: [
     FormsModule,
+    CommonModule,
     SliderinputComponent
   ],
   templateUrl: './configuracion-poliza.component.html',
@@ -14,53 +18,13 @@ import { SliderinputComponent } from '../common/components/sliderinput/sliderinp
 })
 
 export class ConfiguracionPolizaComponent {
-  /* @Output() sendUpdate = new EventEmitter<{
-    asistencia: boolean,
-    responsabilidad: boolean,
-    vehiculo: boolean,
-    colision: boolean
-  }>(); */
 
-  @Output() sendAsistencia = new EventEmitter<boolean>();
-  @Output() sendResponsabilidad = new EventEmitter<boolean>();
-  @Output() sendVehiculo = new EventEmitter<boolean>();
-  @Output() sendColision = new EventEmitter<boolean>();
+  coberturasExistentes = coberturaArray;
 
-
-  asistencia: boolean;
-  responsabilidad: boolean;
-  vehiculo: boolean;
-  colision: boolean;
-
-  constructor() {
-    this.asistencia = false;
-    this.responsabilidad = false;
-    this.vehiculo = false;
-    this.colision = false;
+  constructor(private gestionPoliza: GestionPolizaService) {
   }
 
-  //seria millor fer servir un event per cada variable, per tal de no enviar el bloc sencer cada cop?
-  /* onSwitch() {
-    this.sendUpdate.emit({
-      asistencia: this.asistencia,
-      responsabilidad: this.responsabilidad,
-      vehiculo: this.vehiculo,
-      colision: this.colision
-    });
-  } */
-  onAsistencia(bool: boolean) {
-    this.sendAsistencia.emit(bool)
-  }
-
-  onResponsabilidad(bool: boolean) {
-    this.sendResponsabilidad.emit(bool)
-  }
-
-  onVehiculo(bool: boolean) {
-    this.sendVehiculo.emit(bool)
-  }
-
-  onColision(bool: boolean) {
-    this.sendColision.emit(bool)
+  onUpdate(event: {activate:boolean, id:string}) {
+    this.gestionPoliza.updateCobertura(event)
   }
 }

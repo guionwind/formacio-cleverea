@@ -1,18 +1,19 @@
-import { Poliza } from '../common/models/poliza.model';
-import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
-
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { ConfiguracionPolizaComponent } from '../configuracion-poliza/configuracion-poliza.component';
+import { GestionPolizaService } from '../common/services/gestion-poliza.service';
+import { Tomador } from '../common/models/tomador.model';
 
 
 @Component({
   selector: 'app-datos-vehiculo',
   standalone: true,
   imports: [
-    FormsModule,
     CommonModule,
     ConfiguracionPolizaComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './datos-vehiculo.component.html',
   styleUrls: [
@@ -20,43 +21,41 @@ import { FormsModule } from '@angular/forms';
     '../common/styles/styles-common.css'
   ]
 })
-export class DatosVehiculoComponent {
-  @Output() sendData = new EventEmitter<Poliza>();
+export class DatosVehiculoComponent implements OnInit {
 
-  nombre: string
-  fecha: string
-  marca: string
-  poliza: Poliza
+  datosForm: FormGroup;
 
-  constructor() {
-    this.nombre = ""
-    this.fecha = ""
-    this.marca = ""
-    this.poliza = new Poliza()
+  submitted: boolean = false;
+
+  constructor(private gestionPoliza:GestionPolizaService) {
   }
 
-  onSend() {
-    this.poliza.tomador.nombreApellidos = this.nombre
-    this.poliza.tomador.fechaNacimiento = this.fecha
-    this.poliza.tomador.marcaVehiculo = this.marca
-
-    this.sendData.emit(this.poliza)
+  ngOnInit(): void {
+    this.datosForm = new FormGroup ({
+      nombre: new FormControl<string>("", [Validators.required, this.validarNombreApellidos.bind(this)]),
+      fecha: new FormControl<string>("", [Validators.required, Validators.minLength(10), Validators.pattern('[0-9/]*')]),
+      marca: new FormControl<string>("", [Validators.required, Validators.minLength(3)])
+    })
   }
 
-  onAsistencia(bool: boolean) {
-    this.poliza.asistenciaCarretera = bool
+  //need help with passing from classes to interfaces
+  onSubmit() {
+    this.submitted = true;
+    if (this.datosForm.valid) {
+      const tomador: Tomador = {
+        nombreApellidos: this.datosForm.get('nombre').value,
+        fechaNacimiento: this.datosForm.get('fecha').value,
+        marcaVehiculo: this.datosForm.get('marca').value
+      }
+      this.gestionPoliza.setTomador(tomador)
+      console.log(this.datosForm)
+    }
+    else console.log("invalid form submission")
   }
 
-  onResponsabilidad(bool: boolean) {
-    this.poliza.responsabilidadCivil = bool
+  validarNombreApellidos(control: FormControl): {[s: string]: boolean} {
+    let value: string = control.value;
+    if (value.indexOf(' ') === -1 || value.indexOf(' ') === value.length - 1) return {noapellido: true}
+    return null;
   }
-
-  onVehiculo(bool: boolean) {
-    this.poliza.vehiculoSustitucion = bool
-  }
-
-  onColision(bool: boolean) {
-    this.poliza.colisionAnimales = bool
-  }
-
 }
