@@ -171,7 +171,7 @@ To define the type of an array, use "type[]" (e.g. names: string[] = [])
 Reminder: use the dev tools in the browser to debug error messages and use breakpoints. If bundled, check main.bundle.js file
 
 
-/** Section 5: Components & Databinding deep dive **/
+/** Section 9: Components & Databinding deep dive **/
 
 It is good to split the app into smaller components for reusability and maintainability
 Property & Event binding can be used on HTML elements, Directives and Components.
@@ -239,7 +239,7 @@ Exercici:
 		- despres carregar sliders cobertures+summary carregant a temps real, boto pedir seguro fora
 
 ----
-** Section 7: Directives Deep Dive **
+/** Section 11: Directives Deep Dive **/
 
 Attribute vs. Structural directives 
 	- Difference: Structural directives can change the structure of the DOM / View container; attribute only affect properties
@@ -334,7 +334,7 @@ New structural directive: ngSwitch
 
 
 
-** Section 9: Using Services & Dependency Injection **
+/** Section 13: Using Services & Dependency Injection **/
 
 
 Services allow us to outsource code. They are particularly useful for data processing and for communication between unrelated components.
@@ -380,7 +380,7 @@ Best way of injecting a service, if it is application-wide:
 
 
 
-** Section 11: Changing pages with routing **
+/** Section 15: Changing pages with routing **/
 
 Routing allows an Angular Single Page Application to change major parts of the DOM in order to make it seem that a new page has been loaded.
 This is accomplished by changing the URL to load different HTML templates.
@@ -492,7 +492,7 @@ In order to apply the guard only to the children, use the canActivateChild guard
 
 ------
 
-**Section 17: Observables
+/** Section 17: Observables **/
 
 !!!! Install RxJS
 npm install --save rxjs@6
@@ -605,7 +605,7 @@ public disabledButton$: Observable<boolean> = this.disabledButtonSubject.asObser
 
 ------
 
-** Section 19: Handling Forms in Angular Apps **
+/** Section 19: Handling Forms in Angular Apps **/
 
 Since we are building a Single Page Application, we cannot send forms via submit because it reloads the page.
 Therefore we will be using Angular to process the form inside the application. In case you need to send data to a server, we'll use the built-in HTTPRequest class
@@ -753,7 +753,7 @@ Set/patch form values
 
 ---------
 
-**** Section 21: Using Pipes ****
+/** Section 21: Using Pipes **/
 
 Useful for transforming data output, without modifying the original values.
 
@@ -771,7 +771,7 @@ Chaining pipes is possible.
 
 
 
-**** Section 22: Making HTTP Requests ****
+/** Section 22: Making HTTP Requests **/
 
 Typically, GET requests will be made inside ngOnInit(), then we will show the data.
 
@@ -797,7 +797,7 @@ To add a variable value into a string: ${variable}
 
 
 
-**** RxJs course: Section 2 - Essential Operators + Reactive design ****
+/** RxJs course: Section 2 - Essential Operators & RxJs Mapping + Reactive design **/
 
 In order to chain RxJs operators, we will be using the pipe() function of an observable. This will derive a new observable to which we subscribe.
 
